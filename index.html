@@ -3,64 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>tiitii</title>
+  <title>Ramo de Rosas para Ti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: #ffe4e1;
+      background: linear-gradient(to bottom, #fce4ec, #f8bbd0);
+      font-family: 'Great Vibes', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
+      position: relative;
     }
 
     h1 {
       position: absolute;
-      top: 50%;
+      top: 15%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 4em;
-      color: #ff69b4;
-      text-shadow: 0 0 10px #fff, 0 0 20px #ff1493, 0 0 30px #ff69b4;
-      animation: pulse 2s infinite;
+      transform: translateX(-50%);
+      font-size: 6em;
+      color: #ad1457;
+      text-shadow: 0 0 10px #ffe0e9, 0 0 20px #ffb3d9;
+      animation: appearText 4s ease-in-out;
+      z-index: 10;
     }
 
-    @keyframes pulse {
-      0% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
-      100% { transform: translate(-50%, -50%) scale(1); }
+    @keyframes appearText {
+      0% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1); }
     }
 
-    .flower {
+    .bouquet {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 500px;
+      z-index: 5;
+    }
+
+    .rose {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      animation: bloom 6s ease-out forwards;
+      transform: scale(0);
+    }
+
+    @keyframes bloom {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .petal {
+      width: 50px;
+      height: 80px;
+      background: radial-gradient(circle at 30% 30%, #ff4d6d, #b71c1c);
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background: radial-gradient(circle, #ff69b4 40%, transparent 41%);
-      border-radius: 50%;
-      animation: fall linear infinite;
+      border-radius: 50% 50% 0 0;
+      transform-origin: bottom center;
+      opacity: 0.9;
     }
 
-    @keyframes fall {
-      0% {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
+    .rose .petal:nth-child(1) { transform: rotate(0deg) translateY(-30px); }
+    .rose .petal:nth-child(2) { transform: rotate(72deg) translateY(-30px); }
+    .rose .petal:nth-child(3) { transform: rotate(144deg) translateY(-30px); }
+    .rose .petal:nth-child(4) { transform: rotate(216deg) translateY(-30px); }
+    .rose .petal:nth-child(5) { transform: rotate(288deg) translateY(-30px); }
+
+    .stem {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 6px;
+      height: 100px;
+      background-color: #388e3c;
+      transform: translateX(-50%);
+      border-radius: 3px;
+    }
+
+    .leaf {
+      width: 20px;
+      height: 40px;
+      background: linear-gradient(to bottom right, #66bb6a, #2e7d32);
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    .leaf.left {
+      top: 60%;
+      left: -20px;
+      transform: rotate(-30deg);
+    }
+
+    .leaf.right {
+      top: 60%;
+      right: -20px;
+      transform: rotate(30deg);
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px white, 0 0 20px #fff176;
+      opacity: 0;
+      animation: sparkleAnim 4s infinite ease-in-out;
+    }
+
+    @keyframes sparkleAnim {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.2); }
     }
   </style>
 </head>
 <body>
-  <h1>tiitii</h1>
+  <h1>Para Ti</h1>
+
+  <div class="bouquet">
+    <!-- Rosa 1 -->
+    <div class="rose">
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+    </div>
+    <!-- Rosa 2 -->
+    <div class="rose" style="animation-delay: 0.5s;">
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+    </div>
+    <!-- Rosa 3 -->
+    <div class="rose" style="animation-delay: 1s;">
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="stem"></div>
+      <div class="leaf left"></div>
+      <div class="leaf right"></div>
+    </div>
+  </div>
+
   <script>
-    for (let i = 0; i < 50; i++) {
-      const flower = document.createElement('div');
-      flower.classList.add('flower');
-      flower.style.left = Math.random() * 100 + 'vw';
-      flower.style.animationDuration = (Math.random() * 5 + 5) + 's';
-      flower.style.animationDelay = Math.random() * 5 + 's';
-      document.body.appendChild(flower);
+    // Añade brillos aleatorios
+    for (let i = 0; i < 30; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.top = Math.random() * 100 + 'vh';
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(sparkle);
     }
   </script>
 </body>
