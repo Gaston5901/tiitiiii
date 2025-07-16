@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(to top, #ffdee9, #b5fffc);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 4rem;
+  color: #e91e63;
+  text-shadow: 2px 2px #fff;
+  margin-bottom: 40px;
+}
+
+.flor {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.centro {
+  background: yellow;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.petalo {
+  width: 80px;
+  height: 80px;
+  background: pink;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+.petalo1 {
+  top: 0;
+  left: 35px;
+}
+
+.petalo2 {
+  top: 35px;
+  left: 0;
+}
+
+.petalo3 {
+  top: 35px;
+  left: 70px;
+}
+
+.petalo4 {
+  top: 70px;
+  left: 35px;
+}
+
+.petalos-caen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.petalito {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: pink;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: caer linear infinite;
+}
+
+@keyframes caer {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
