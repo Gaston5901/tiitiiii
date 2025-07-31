@@ -1,0 +1,226 @@
+/* General reset and body styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0c0f1e; /* Fondo oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  perspective: 1000px; /* Habilita el contexto 3D para toda la escena */
+}
+
+/* Container for the glass dome */
+.container {
+  position: relative;
+  width: 280px; /* Ancho más grande para la rosa 3D */
+  height: 500px; /* Alto para la caída del pétalo */
+  transform-style: preserve-3d; /* Permite transformaciones 3D dentro del contenedor */
+}
+
+/* Glass dome styling - clean and subtle */
+.glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 2px solid rgba(136, 146, 179, 0.3); /* Borde más sutil */
+  border-radius: 140px 140px 15px 15px;
+  box-shadow: 0 0 20px rgba(136, 146, 179, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 30px;
+  transform-style: preserve-3d; /* Para que la rosa se vea 3D dentro del cristal */
+  animation: glass-shimmer 8s infinite ease-in-out; /* Sutil brillo del cristal */
+}
+
+/* Glass top highlight */
+.glass::before {
+  content: '';
+  position: absolute;
+  top: 8px; /* Ajustado ligeramente */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+/* Main glowing base for the glass */
+.glass-glow-base {
+  position: absolute;
+  width: 180px; /* Brillo más grande */
+  height: 90px;
+  bottom: -20px;
+  background: radial-gradient(circle at center, rgba(255, 0, 150, 0.5), transparent 70%);
+  border-radius: 50%;
+  filter: blur(20px); /* Más desenfoque */
+  animation: pulse-glow 3.5s infinite alternate ease-in-out;
+  z-index: 0;
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes glass-shimmer {
+    0%, 100% { border-color: rgba(136, 146, 179, 0.3); box-shadow: 0 0 20px rgba(136, 146, 179, 0.2); }
+    50% { border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); }
+}
+
+
+/* Flower Container - this will hold all petals and stem */
+.flower {
+  position: absolute;
+  top: 100px;
+  width: 120px; /* Ancho base de la rosa */
+  height: 180px; /* Alto base de la rosa */
+  transform-style: preserve-3d; /* Permite 3D para toda la rosa */
+  transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg); /* Ligeramente inclinada */
+  animation: rose-breathe 8s infinite ease-in-out; /* Animación de "respiración" sutil */
+  z-index: 1;
+}
+
+@keyframes rose-breathe {
+    0%, 100% { transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg); }
+    50% { transform: rotateX(-12deg) rotateY(5deg) rotateZ(-3deg); } /* Pequeño movimiento */
+}
+
+/* Petal Base Style */
+.petal {
+  position: absolute;
+  width: 70px;
+  height: 90px;
+  background: linear-gradient(to top right, #e6004c, #ff4081, #ff80a5); /* Gradiente más complejo */
+  border-radius: 60% 40% 70% 30% / 50% 50% 50% 50%; /* Forma más orgánica de pétalo */
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 0, 150, 0.4); /* Sombra interna y brillo externo */
+  transform-style: preserve-3d; /* Para que cada pétalo tenga su 3D */
+  transform-origin: bottom center; /* Rotar desde la base */
+  left: 50%; /* Centra cada pétalo horizontalmente en su contenedor */
+  margin-left: -35px; /* Ajusta con la mitad de su ancho para el centrado perfecto */
+}
+
+/* Individual Petals - positioned and rotated for 3D effect */
+/* Innermost petals */
+.petal.p1 { transform: rotateY(0deg) rotateX(20deg) translateZ(10px); z-index: 5; background: linear-gradient(to top, #ff80a5, #e6004c); }
+.petal.p2 { transform: rotateY(60deg) rotateX(25deg) translateZ(8px); z-index: 4; }
+.petal.p3 { transform: rotateY(-60deg) rotateX(25deg) translateZ(8px); z-index: 4; }
+
+/* Middle petals */
+.petal.p4 { transform: rotateY(120deg) rotateX(30deg) translateZ(6px); z-index: 3; }
+.petal.p5 { transform: rotateY(-120deg) rotateX(30deg) translateZ(6px); z-index: 3; }
+
+/* Outermost petals */
+.petal.p6 { transform: rotateY(180deg) rotateX(35deg) translateZ(4px); z-index: 2; }
+.petal.p7 { transform: rotateY(240deg) rotateX(38deg) translateZ(2px); z-index: 1; }
+.petal.p8 { transform: rotateY(-240deg) rotateX(38deg) translateZ(2px); z-index: 1; }
+
+
+/* Stem */
+.stem {
+  position: absolute; /* Asegura que se pueda posicionar con left/top */
+  width: 6px;
+  height: 150px; /* Tallo más largo */
+  background: linear-gradient(to bottom, #008000, #3cb371); /* Verde oscuro a claro */
+  border-radius: 3px;
+  /* CAMBIO CLAVE AQUÍ: CENTRAR EL TALLO */
+  left: 50%; /* Mueve el borde izquierdo a la mitad del contenedor padre (.flower) */
+  transform: translateX(-50%) translateZ(-10px); /* Mueve hacia atrás por la mitad de su propio ancho y hacia atrás en Z */
+  /* Fin del CAMBIO CLAVE */
+  top: 80px; /* Ajusta la posición vertical para que se conecte bien con los pétalos */
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 0;
+  transform-style: preserve-3d;
+}
+
+/* Leaves on the stem */
+.leaf {
+  position: absolute;
+  width: 30px;
+  height: 15px;
+  background: linear-gradient(to right, #228b22, #3cb371); /* Verde de hoja */
+  border-radius: 0 50% 50% 50%; /* Forma de hoja */
+  box-shadow: 0 0 5px rgba(0, 128, 0, 0.5);
+  transform-origin: left center;
+  z-index: 1;
+}
+
+.leaf.l1 {
+  top: 50px; /* Posición en el tallo */
+  left: -20px;
+  transform: rotateZ(-30deg) rotateY(-45deg); /* Rotación para que se vea 3D */
+}
+
+.leaf.l2 {
+  top: 80px;
+  right: -20px;
+  transform: rotateZ(30deg) rotateY(45deg);
+}
+
+/* Falling petal - complex shape and realistic movement */
+.falling-petal {
+  position: absolute;
+  width: 30px; /* Tamaño del pétalo que cae */
+  height: 25px;
+  background: radial-gradient(circle at center, #ff80a5, #e6004c); /* Color del pétalo */
+  border-radius: 50% 30% 60% 40% / 40% 60% 40% 60%; /* Forma irregular de pétalo real */
+  box-shadow: 0 0 12px rgba(255, 0, 90, 0.6); /* Brillo del pétalo */
+  animation: realistic-petal-fall 6s ease-in-out infinite; /* Animación más larga y compleja */
+  opacity: 0; /* Empieza invisible */
+  z-index: 2; /* Encima de la flor */
+  transform-origin: center center;
+}
+
+/* Animation for the realistic falling petal */
+@keyframes realistic-petal-fall {
+  0% {
+    top: 160px; /* Comienza cerca de la flor */
+    left: 55%;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+    opacity: 1; /* Aparece */
+  }
+  15% {
+    left: 45%;
+    transform: rotateX(30deg) rotateY(10deg) rotateZ(60deg) scale(0.98);
+    opacity: 0.9;
+  }
+  30% {
+    top: 250px;
+    left: 65%;
+    transform: rotateX(-20deg) rotateY(-30deg) rotateZ(120deg) scale(1.02);
+    opacity: 0.7;
+  }
+  45% {
+    left: 35%;
+    transform: rotateX(40deg) rotateY(20deg) rotateZ(180deg) scale(0.95);
+    opacity: 0.5;
+  }
+  60% {
+    top: 380px;
+    left: 50%;
+    transform: rotateX(-10deg) rotateY(-40deg) rotateZ(240deg) scale(1.0);
+    opacity: 0.3;
+  }
+  80% {
+    left: 70%;
+    transform: rotateX(50deg) rotateY(50deg) rotateZ(300deg) scale(0.9);
+    opacity: 0.1;
+  }
+  100% {
+    top: 500px; /* Cae fuera de la vista */
+    left: 45%;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(360deg) scale(0.8);
+    opacity: 0; /* Desaparece */
+  }
+}
