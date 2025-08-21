@@ -34,40 +34,34 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
             max-width: 90%;
+            animation: escalaEntrada 1s ease-out forwards;
         }
 
         #mensaje {
-            font-size: 1.5em; /* Se redujo el tamaño de la letra aquí */
+            font-size: 1.5em;
             font-weight: 700;
             line-height: 1.6;
-            white-space: pre-wrap;
-            overflow: hidden;
-            border-right: .15em solid var(--color-principal);
-            white-space: nowrap;
-            margin: 0 auto;
-            animation: escribir 4s steps(var(--longitud-mensaje), end) 1s forwards,
-                       blinking-cursor .75s step-end infinite;
-            --longitud-mensaje: 0;
+            white-space: pre-wrap; /* Permite que el texto se ajuste en varias líneas */
+            display: inline-block;
+            text-align: left;
+        }
+        
+        #mensaje span {
+            opacity: 0;
         }
 
-        /* Animaciones */
+        /* Animaciones de fondo y burbujas */
         @keyframes degradadoAnimado {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        @keyframes escribir {
-            from { width: 0; }
-            to { width: 100%; }
+        @keyframes escalaEntrada {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes blinking-cursor {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--color-principal); }
-        }
-
-        /* Burbujas */
         .burbuja {
             position: absolute;
             border-radius: 50%;
@@ -96,7 +90,7 @@
                 padding: 40px 20px;
             }
             #mensaje {
-                font-size: 1.2em; /* Se redujo también para celulares */
+                font-size: 1.2em;
             }
         }
     </style>
@@ -125,16 +119,14 @@
         });
         mensajeElemento.innerHTML = html;
 
-        // Script para la animación de escritura
+        // Nueva animación de escritura
         const spanMensaje = mensajeElemento.querySelectorAll('span');
-        const longitudMensaje = mensajeCompleto.replace(/\n/g, '').length;
-        mensajeElemento.style.setProperty('--longitud-mensaje', longitudMensaje);
-
+        
         spanMensaje.forEach((span, index) => {
-            span.style.opacity = '0';
             setTimeout(() => {
                 span.style.opacity = '1';
-            }, index * 20);
+                span.style.transition = 'opacity 0.1s ease'; // Transición suave para cada letra
+            }, index * 40); // Ajusta la velocidad de escritura aquí
         });
     </script>
 </body>
