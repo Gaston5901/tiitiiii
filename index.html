@@ -3,131 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mensaje Mágico</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
-        :root {
-            --color-principal: #333;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #A855F7, #EC4899, #F9A8D4);
-            background-size: 400% 400%;
-            animation: degradadoAnimado 15s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            text-align: center;
-            color: var(--color-principal);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contenedor {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 60px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(10px);
-            max-width: 90%;
-            animation: escalaEntrada 1s ease-out forwards;
-        }
-
-        #mensaje {
-            font-size: 1.5em;
-            font-weight: 700;
-            line-height: 1.6;
-            white-space: pre-wrap; /* Permite que el texto se ajuste en varias líneas */
-            display: inline-block;
-            text-align: left;
-        }
-        
-        #mensaje span {
-            opacity: 0;
-        }
-
-        /* Animaciones de fondo y burbujas */
-        @keyframes degradadoAnimado {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes escalaEntrada {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .burbuja {
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.6);
-            animation: flotar 4s ease-in-out infinite, cambiarOpacidad 2s ease-in-out infinite alternate;
-        }
-
-        .burbuja:nth-child(1) { width: 20px; height: 20px; bottom: -20px; left: 10%; animation-delay: 0s, 1s; }
-        .burbuja:nth-child(2) { width: 30px; height: 30px; bottom: -30px; left: 30%; animation-delay: 1s, 0.5s; }
-        .burbuja:nth-child(3) { width: 15px; height: 15px; bottom: -15px; left: 50%; animation-delay: 2s, 1.5s; }
-        .burbuja:nth-child(4) { width: 40px; height: 40px; bottom: -40px; left: 70%; animation-delay: 0.5s, 0s; }
-
-        @keyframes flotar {
-            0% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-500px) scale(1.2); }
-            100% { transform: translateY(-1000px) scale(1); }
-        }
-        @keyframes cambiarOpacidad {
-            from { opacity: 0.5; }
-            to { opacity: 1; }
-        }
-        
-        /* Ajustes para celulares */
-        @media (max-width: 600px) {
-            .contenedor {
-                padding: 40px 20px;
-            }
-            #mensaje {
-                font-size: 1.2em;
-            }
-        }
-    </style>
+    <title>Animación Romántica</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="contenedor">
-        <div id="mensaje"></div>
+    <div class="container">
+        <h2 id="countdown" class="hidden">3</h2>
+        <div class="phrase-box">
+            <h1 class="phrase">Eres mi persona favorita TITII.</h1>
+        </div>
+        <div class="heart-animation"></div>
     </div>
-    
-    <div class="burbuja"></div>
-    <div class="burbuja"></div>
-    <div class="burbuja"></div>
-    <div class="burbuja"></div>
-
-    <script>
-        const mensajeElemento = document.getElementById('mensaje');
-        const mensajeCompleto = "HOLITAAA 💖💝, Te quiero y te aprecio mucho TITTII<33. \n\nEspero que tengas un día lleno de alegría, de esos que te hacen sonreír sin darte cuenta. \n\nQue todo lo que hagas hoy te salga de maravilla, y recuerda siempre cuidarte mucho.";
-        
-        let html = '';
-        mensajeCompleto.split('').forEach((caracter, index) => {
-            if (caracter === '\n') {
-                html += '<br><br>';
-            } else {
-                html += `<span>${caracter}</span>`;
-            }
-        });
-        mensajeElemento.innerHTML = html;
-
-        // Nueva animación de escritura
-        const spanMensaje = mensajeElemento.querySelectorAll('span');
-        
-        spanMensaje.forEach((span, index) => {
-            setTimeout(() => {
-                span.style.opacity = '1';
-                span.style.transition = 'opacity 0.1s ease'; // Transición suave para cada letra
-            }, index * 40); // Ajusta la velocidad de escritura aquí
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
