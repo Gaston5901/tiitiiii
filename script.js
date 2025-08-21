@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             countdownElement.style.display = 'none';
 
             // Cambiamos la frase
-            phraseElement.textContent = 'Te quiero mucho.';
+            phraseElement.textContent = 'Te quiero mucho<33';
 
             // Iniciamos la animación de fuegos artificiales
             setInterval(createFireworks, 2000);
