@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corazón Secreto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>¡Un Mensaje para Vos!</h1>
+        <div id="corazon-contenedor" class="heart-wrapper">
+            <div class="heart" id="corazon-clicable"></div>
+            <p id="instruccion">¡Hacé clic en el corazón!</p>
+        </div>
+        <div id="mensaje-revelado" class="mensaje-oculto">
+            <h2>¡Sorpresa!</h2>
+            <p id="mensaje-oculto">
+                Holitaaa💗 Sabía que lo ibas a abrir. Este corazón guarda todo el cariño que tengo por vos Titii. Espero que este pequeño detalle te alegre el día. Te quiero mucho 🌹🌹
+            </p>
+            <button id="cerrar-mensaje">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para que el corazón funcione
+        const corazonClicable = document.getElementById('corazon-clicable');
+        const mensajeRevelado = document.getElementById('mensaje-revelado');
+        const instruccion = document.getElementById('instruccion');
+        const cerrarBoton = document.getElementById('cerrar-mensaje');
+        const corazonContenedor = document.getElementById('corazon-contenedor');
+
+        corazonClicable.addEventListener('click', () => {
+            corazonContenedor.classList.add('ocultar-corazon');
+            instruccion.style.display = 'none'; // Oculta la instrucción
+            setTimeout(() => {
+                mensajeRevelado.classList.add('mostrar');
+                mensajeRevelado.classList.remove('mensaje-oculto');
+            }, 500); // Pequeña demora para la transición
+        });
+
+        cerrarBoton.addEventListener('click', () => {
+            mensajeRevelado.classList.remove('mostrar');
+            mensajeRevelado.classList.add('mensaje-oculto');
+            setTimeout(() => {
+                corazonContenedor.classList.remove('ocultar-corazon');
+                instruccion.style.display = 'block'; // Vuelve a mostrar la instrucción
+            }, 500); // Pequeña demora para la transición
+        });
+    </script>
+</body>
+</html>

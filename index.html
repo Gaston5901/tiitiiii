@@ -3,49 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corazón Secreto</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Mensaje Mágico</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        :root {
+            --color-principal: #333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #A855F7, #EC4899, #F9A8D4);
+            background-size: 400% 400%;
+            animation: degradadoAnimado 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            color: var(--color-principal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contenedor {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+        }
+
+        #mensaje {
+            font-size: 1.5em; /* Se redujo el tamaño de la letra aquí */
+            font-weight: 700;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            overflow: hidden;
+            border-right: .15em solid var(--color-principal);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: escribir 4s steps(var(--longitud-mensaje), end) 1s forwards,
+                       blinking-cursor .75s step-end infinite;
+            --longitud-mensaje: 0;
+        }
+
+        /* Animaciones */
+        @keyframes degradadoAnimado {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes escribir {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blinking-cursor {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--color-principal); }
+        }
+
+        /* Burbujas */
+        .burbuja {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            animation: flotar 4s ease-in-out infinite, cambiarOpacidad 2s ease-in-out infinite alternate;
+        }
+
+        .burbuja:nth-child(1) { width: 20px; height: 20px; bottom: -20px; left: 10%; animation-delay: 0s, 1s; }
+        .burbuja:nth-child(2) { width: 30px; height: 30px; bottom: -30px; left: 30%; animation-delay: 1s, 0.5s; }
+        .burbuja:nth-child(3) { width: 15px; height: 15px; bottom: -15px; left: 50%; animation-delay: 2s, 1.5s; }
+        .burbuja:nth-child(4) { width: 40px; height: 40px; bottom: -40px; left: 70%; animation-delay: 0.5s, 0s; }
+
+        @keyframes flotar {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-500px) scale(1.2); }
+            100% { transform: translateY(-1000px) scale(1); }
+        }
+        @keyframes cambiarOpacidad {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+        
+        /* Ajustes para celulares */
+        @media (max-width: 600px) {
+            .contenedor {
+                padding: 40px 20px;
+            }
+            #mensaje {
+                font-size: 1.2em; /* Se redujo también para celulares */
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>¡Un Mensaje para Vos!</h1>
-        <div id="corazon-contenedor" class="heart-wrapper">
-            <div class="heart" id="corazon-clicable"></div>
-            <p id="instruccion">¡Hacé clic en el corazón!</p>
-        </div>
-        <div id="mensaje-revelado" class="mensaje-oculto">
-            <h2>¡Sorpresa!</h2>
-            <p id="mensaje-oculto">
-                Holitaaa💗 Sabía que lo ibas a abrir. Este corazón guarda todo el cariño que tengo por vos Titii. Espero que este pequeño detalle te alegre el día. Te quiero mucho 🌹🌹
-            </p>
-            <button id="cerrar-mensaje">Cerrar</button>
-        </div>
+    <div class="contenedor">
+        <div id="mensaje"></div>
     </div>
+    
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
 
     <script>
-        // JavaScript para que el corazón funcione
-        const corazonClicable = document.getElementById('corazon-clicable');
-        const mensajeRevelado = document.getElementById('mensaje-revelado');
-        const instruccion = document.getElementById('instruccion');
-        const cerrarBoton = document.getElementById('cerrar-mensaje');
-        const corazonContenedor = document.getElementById('corazon-contenedor');
-
-        corazonClicable.addEventListener('click', () => {
-            corazonContenedor.classList.add('ocultar-corazon');
-            instruccion.style.display = 'none'; // Oculta la instrucción
-            setTimeout(() => {
-                mensajeRevelado.classList.add('mostrar');
-                mensajeRevelado.classList.remove('mensaje-oculto');
-            }, 500); // Pequeña demora para la transición
+        const mensajeElemento = document.getElementById('mensaje');
+        const mensajeCompleto = "HOLITAAA 💖💝, Te quiero y te aprecio mucho TITTII<33. \n\nEspero que tengas un día lleno de alegría, de esos que te hacen sonreír sin darte cuenta. \n\nQue todo lo que hagas hoy te salga de maravilla, y recuerda siempre cuidarte mucho.";
+        
+        let html = '';
+        mensajeCompleto.split('').forEach((caracter, index) => {
+            if (caracter === '\n') {
+                html += '<br><br>';
+            } else {
+                html += `<span>${caracter}</span>`;
+            }
         });
+        mensajeElemento.innerHTML = html;
 
-        cerrarBoton.addEventListener('click', () => {
-            mensajeRevelado.classList.remove('mostrar');
-            mensajeRevelado.classList.add('mensaje-oculto');
+        // Script para la animación de escritura
+        const spanMensaje = mensajeElemento.querySelectorAll('span');
+        const longitudMensaje = mensajeCompleto.replace(/\n/g, '').length;
+        mensajeElemento.style.setProperty('--longitud-mensaje', longitudMensaje);
+
+        spanMensaje.forEach((span, index) => {
+            span.style.opacity = '0';
             setTimeout(() => {
-                corazonContenedor.classList.remove('ocultar-corazon');
-                instruccion.style.display = 'block'; // Vuelve a mostrar la instrucción
-            }, 500); // Pequeña demora para la transición
+                span.style.opacity = '1';
+            }, index * 20);
         });
     </script>
 </body>
