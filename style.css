@@ -1,25 +1,29 @@
 /* Importa las fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 
-/* Estilos de la carta y el sobre (CÓDIGO ORIGINAL) */
+/* --- Estilos Generales y Reseteo --- */
 body {
+    /* Usamos min-height para evitar problemas con la UI de los navegadores móviles */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin: 0;
     background: #0c0f1e;
     font-family: 'Dancing Script', cursive;
     overflow: hidden;
     transition: background-color 1s ease-in-out;
+    box-sizing: border-box; /* Muy importante para el manejo del padding y borde */
 }
 
+/* --- Estilos de la Carta y el Sobre --- */
 .envelope-container {
-    position: relative;
+    /* El sobre se mantiene con dimensiones fijas para la animación */
     width: 300px;
     height: 200px;
+    position: relative;
     cursor: pointer;
-    transition: transform 1s ease-in-out, opacity 1s ease;
+    transition: opacity 1s ease, visibility 1s;
 }
 
 .envelope {
@@ -100,17 +104,19 @@ body {
     background: linear-gradient(135deg, #ffe0f7 0%, #f8bbd0 100%);
     backdrop-filter: blur(10px);
     z-index: 10;
-    padding: 50px;
-    box-sizing: border-box;
+    /* Usamos flexbox para centrar el contenido */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+    padding: 20px; /* Un padding adaptable para la carta */
     animation: fadeInScale 1.5s ease-out forwards;
     opacity: 0;
     visibility: hidden;
     box-shadow: 0 8px 32px 0 rgba(249, 168, 212, 0.37);
     border-radius: 30px;
+    font-family: 'Dancing Script', cursive;
 }
 
 .full-screen-letter p {
@@ -118,8 +124,9 @@ body {
     font-size: 1.8em;
     line-height: 1.8;
     color: #f33f7b;
-    font-family: 'Dancing Script', cursive;
-    text-shadow: 1px 1px 2px rgba(233,30,99,0.08);
+    text-shadow: 1px 1px 2px rgba(233, 30, 99, 0.08);
+    /* Usamos una unidad más adaptable para el ancho */
+    max-width: 90%; 
 }
 
 @keyframes fadeInScale {
@@ -135,7 +142,7 @@ body {
     opacity: 0;
 }
 
-/* --- Estilos de la Rosa (CÓDIGO ORIGINAL) --- */
+/* --- Estilos de la Rosa --- */
 .rosa-container {
     position: relative;
     display: flex;
@@ -145,13 +152,14 @@ body {
     overflow: hidden;
     transform-style: preserve-3d;
     background-color: #0c0f1e;
-    transition: opacity 1s ease;
+    transition: opacity 1s ease, visibility 1s;
 }
 
 .glass {
-    position: relative;
+    /* Mantener las dimensiones para la rosa */
     width: 280px;
     height: 500px;
+    position: relative;
     background: transparent;
     border: 2px solid rgba(136, 146, 179, 0.3);
     border-radius: 140px 140px 15px 15px;
@@ -298,11 +306,6 @@ body {
     100% { top: 500px; left: 45%; transform: rotateX(0deg) rotateY(0deg) rotateZ(360deg) scale(0.8); opacity: 0; }
 }
 
-/* --- Nuevos Estilos para la transición --- */
-.rosa-container {
-    background-color: #0c0f1e;
-}
-
 .go-to-envelope {
     position: absolute;
     bottom: 20px;
@@ -312,7 +315,7 @@ body {
     font-size: 1.2em;
     cursor: pointer;
     font-family: 'Dancing Script', cursive;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.2);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
     z-index: 5;
     animation: pulse-button 1.5s infinite alternate ease-in-out;
 }
@@ -322,7 +325,6 @@ body {
     to { transform: translateX(-50%) scale(1.05); opacity: 0.9; }
 }
 
-/* Clases de utilidad para mostrar/ocultar */
 /* Clases de utilidad para mostrar/ocultar */
 .hidden {
     opacity: 0;
@@ -334,39 +336,11 @@ body {
     visibility: visible;
 }
 
-/* Y ajusta los contenedores para transiciones suaves */
-.envelope-container {
-    /* ... (resto de los estilos) */
-    transition: transform 1s ease-in-out, opacity 1s ease, visibility 1s; /* Añadir la transición de visibilidad */
+.envelope-container, .full-screen-letter, .rosa-container {
+    transition: opacity 1s ease, visibility 1s, transform 1s ease-in-out;
 }
 
-.full-screen-letter {
-    /* ... (resto de los estilos) */
-    transition: opacity 1.5s ease-out, visibility 1.5s; /* Asegurar la transición de opacidad y visibilidad */
-}
-
-.rosa-container {
-    /* ... (resto de los estilos) */
-    transition: opacity 1s ease, visibility 1s; /* Asegurar la transición de opacidad y visibilidad */
-}
-
-/* Nuevas adaptaciones para móviles */
-@media (max-width: 600px) {
-    /* Mantiene los estilos de la carta para móvil */
-    .full-screen-letter p {
-        font-size: 1.15em;
-        max-width: 98vw;
-        line-height: 1.5;
-        word-break: break-word;
-    }
-    .go-to-envelope {
-        font-size: 1em;
-        bottom: 5vh;
-    }
-}
-/* ... (Todo el código CSS anterior de ambos proyectos) ... */
-
-/* Nuevos estilos para el botón de regreso */
+/* Estilos para el botón de regreso */
 .return-button {
     position: absolute;
     top: 20px;
@@ -380,7 +354,7 @@ body {
     font-family: 'Dancing Script', cursive;
     cursor: pointer;
     transition: all 0.3s ease;
-    z-index: 12; /* Asegura que esté por encima de la carta */
+    z-index: 12;
 }
 
 .return-button:hover {
@@ -389,9 +363,51 @@ body {
     transform: scale(1.05);
 }
 
-/* --- Nuevas adaptaciones para móviles --- */
+/* --- Adaptaciones para móviles --- */
 @media (max-width: 600px) {
-    /* ... (Estilos móviles anteriores) ... */
+    /* Ajustes generales para el cuerpo */
+    body {
+        padding: 10px;
+    }
+
+    /* Ajustes para el sobre */
+    .envelope-container {
+        width: 85vw; /* Usa el 85% del ancho de la pantalla */
+        height: auto;
+    }
+    
+    .flap {
+        /* Ajuste de los bordes para el nuevo ancho del sobre */
+        border-left: 42.5vw solid transparent;
+        border-right: 42.5vw solid transparent;
+        border-top: calc(85vw / 3) solid #f8bbd0;
+    }
+
+    .heart-seal {
+        top: calc(85vw / 2);
+    }
+    
+    .message-overlay {
+      font-size: 1.2em;
+    }
+
+    /* Ajustes para la carta a pantalla completa */
+    .full-screen-letter {
+        border-radius: 0; /* Para que ocupe toda la pantalla */
+        padding: 20px 10px; /* Padding ajustado para móviles */
+    }
+
+    .full-screen-letter p {
+        font-size: 1em;
+        line-height: 1.5;
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .go-to-envelope {
+        font-size: 1em;
+        bottom: 5vh;
+    }
     
     .return-button {
         top: 10px;
@@ -399,4 +415,41 @@ body {
         padding: 8px 12px;
         font-size: 0.9em;
     }
-}   
+    
+    /* Ajustes para que la rosa se adapte a pantallas pequeñas */
+    .glass {
+      width: 80vw;
+      height: 120vw;
+      border-radius: 40vw 40vw 5px 5px;
+      box-shadow: 0 0 10px rgba(136, 146, 179, 0.2);
+    }
+    
+    .glass::before {
+      width: 30vw;
+    }
+    
+    .glass-glow-base {
+      width: 60vw;
+      height: 30vw;
+    }
+    
+    .flower {
+      width: 40vw;
+      height: 60vw;
+    }
+    
+    .petal {
+      width: 25vw;
+      height: 30vw;
+      margin-left: calc(-25vw / 2);
+    }
+    
+    .petal.p1, .petal.p2, .petal.p3, .petal.p4, .petal.p5, .petal.p6, .petal.p7, .petal.p8 {
+      transform: none; /* Eliminar los giros para evitar problemas de compatibilidad */
+    }
+    
+    .stem {
+      width: 2vw;
+      height: 40vw;
+    }
+}
