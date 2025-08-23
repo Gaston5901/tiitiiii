@@ -3,16 +3,15 @@ function showEnvelope() {
     const envelopeContainer = document.getElementById('envelope-container');
     const body = document.body;
 
-    // Cambia el fondo del cuerpo a blanco/rosa suave
     body.style.backgroundColor = '#f0e6f6';
 
-    // Oculta la rosa con una transición suave
+    rosaContainer.classList.add('hidden');
     rosaContainer.style.opacity = '0';
-    rosaContainer.style.visibility = 'hidden';
 
-    // Muestra el sobre con una transición suave
-    envelopeContainer.style.visibility = 'visible';
-    envelopeContainer.style.opacity = '1';
+    envelopeContainer.classList.remove('hidden');
+    setTimeout(() => {
+        envelopeContainer.style.opacity = '1';
+    }, 10);
 }
 
 function openEnvelope() {
@@ -24,14 +23,10 @@ function openEnvelope() {
         messageOverlay.style.opacity = '0';
         envelopeContainer.classList.add('open');
 
-        // Usa setTimeout para dar tiempo a la animación de la solapa
         setTimeout(() => {
-            // Oculta el sobre y muestra la carta con una transición suave
-            envelopeContainer.style.opacity = '0';
-            envelopeContainer.style.visibility = 'hidden';
-            
+            envelopeContainer.style.display = 'none';
             fullLetter.style.visibility = 'visible';
-            fullLetter.style.opacity = '1';
+            fullLetter.style.display = 'flex';
         }, 1000);
     }
 }
@@ -45,11 +40,14 @@ function returnToRosa() {
     // Cambia el fondo de vuelta al de la rosa
     body.style.backgroundColor = '#0c0f1e';
 
-    // Oculta la carta con una transición suave
-    fullLetter.style.opacity = '0';
+    // Oculta la carta y el sobre
+    fullLetter.style.display = 'none';
     fullLetter.style.visibility = 'hidden';
+    document.getElementById('envelope-container').classList.add('hidden');
 
-    // Muestra el contenedor de la rosa con una transición suave
-    rosaContainer.style.visibility = 'visible';
-    rosaContainer.style.opacity = '1';
+    // Muestra el contenedor de la rosa
+    rosaContainer.classList.remove('hidden');
+    setTimeout(() => {
+        rosaContainer.style.opacity = '1';
+    }, 10);
 }

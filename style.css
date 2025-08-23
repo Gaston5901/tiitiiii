@@ -8,7 +8,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background:#0c0f1e;
+    background: #0c0f1e;
     font-family: 'Dancing Script', cursive;
     overflow: hidden;
     transition: background-color 1s ease-in-out;
@@ -91,8 +91,6 @@ body {
     left: 15px;
 }
 
-
-/* PASO 2: Aquí le aplicas la fuente a la carta. */
 .full-screen-letter {
     position: fixed;
     top: 0;
@@ -113,10 +111,8 @@ body {
     visibility: hidden;
     box-shadow: 0 8px 32px 0 rgba(249, 168, 212, 0.37);
     border-radius: 30px;
-    font-family: 'Dancing Script', cursive; 
 }
 
-/* PASO 3: Aquí le das estilo al texto del párrafo. */
 .full-screen-letter p {
     max-width: 800px;
     font-size: 1.8em;
@@ -335,10 +331,6 @@ body {
 .visible {
     display: flex !important;
     opacity: 1;
-}
-span{
-    color: #1d1c1c;
-    padding: 0 2px;
 }
 
 /* Nuevas adaptaciones para móviles */
