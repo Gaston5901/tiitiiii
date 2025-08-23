@@ -323,14 +323,31 @@ body {
 }
 
 /* Clases de utilidad para mostrar/ocultar */
+/* Clases de utilidad para mostrar/ocultar */
 .hidden {
-    display: none !important;
     opacity: 0;
+    visibility: hidden;
 }
 
 .visible {
-    display: flex !important;
     opacity: 1;
+    visibility: visible;
+}
+
+/* Y ajusta los contenedores para transiciones suaves */
+.envelope-container {
+    /* ... (resto de los estilos) */
+    transition: transform 1s ease-in-out, opacity 1s ease, visibility 1s; /* Añadir la transición de visibilidad */
+}
+
+.full-screen-letter {
+    /* ... (resto de los estilos) */
+    transition: opacity 1.5s ease-out, visibility 1.5s; /* Asegurar la transición de opacidad y visibilidad */
+}
+
+.rosa-container {
+    /* ... (resto de los estilos) */
+    transition: opacity 1s ease, visibility 1s; /* Asegurar la transición de opacidad y visibilidad */
 }
 
 /* Nuevas adaptaciones para móviles */
