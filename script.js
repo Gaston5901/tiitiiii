@@ -1,63 +1,53 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const animationContainer = document.querySelector('.heart-animation');
+function showEnvelope() {
+    const rosaContainer = document.getElementById('rosa-container');
+    const envelopeContainer = document.getElementById('envelope-container');
     const body = document.body;
-    const countdownElement = document.getElementById('countdown');
-    const phraseElement = document.querySelector('.phrase');
 
-    // Función para crear y animar corazones
-    const createHeart = () => {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = `${Math.random() * 100}vw`;
-        heart.style.animationDuration = `${Math.random() * 4 + 4}s`;
-        
-        animationContainer.appendChild(heart);
+    body.style.backgroundColor = '#f0e6f6';
+
+    rosaContainer.classList.add('hidden');
+    rosaContainer.style.opacity = '0';
+
+    envelopeContainer.classList.remove('hidden');
+    setTimeout(() => {
+        envelopeContainer.style.opacity = '1';
+    }, 10);
+}
+
+function openEnvelope() {
+    const envelopeContainer = document.getElementById('envelope-container');
+    const fullLetter = document.getElementById('full-letter');
+    const messageOverlay = document.querySelector('.message-overlay');
+
+    if (!envelopeContainer.classList.contains('open')) {
+        messageOverlay.style.opacity = '0';
+        envelopeContainer.classList.add('open');
 
         setTimeout(() => {
-            heart.remove();
-        }, 8000);
-    };
+            envelopeContainer.style.display = 'none';
+            fullLetter.style.visibility = 'visible';
+            fullLetter.style.display = 'flex';
+        }, 1000);
+    }
+}
 
-    setInterval(createHeart, 600);
+// Nueva función para volver a la rosa
+function returnToRosa() {
+    const rosaContainer = document.getElementById('rosa-container');
+    const fullLetter = document.getElementById('full-letter');
+    const body = document.body;
 
-    // Función para crear la animación de fuegos artificiales
-    const createFireworks = () => {
-        const fireworkCount = 10;
-        for (let i = 0; i < fireworkCount; i++) {
-            const firework = document.createElement('div');
-            firework.classList.add('firework');
-            firework.style.left = `${Math.random() * 100}vw`;
-            firework.style.top = `${Math.random() * 100}vh`;
-            firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
-            firework.style.animationDelay = `${Math.random()}s`;
-            
-            body.appendChild(firework);
-            
-            firework.onanimationend = () => {
-                firework.remove();
-            };
-        }
-    };
+    // Cambia el fondo de vuelta al de la rosa
+    body.style.backgroundColor = '#0c0f1e';
 
-    // Lógica del contador
-    let count = 3;
-    
-    // Mostramos el contador
-    countdownElement.classList.remove('hidden');
+    // Oculta la carta y el sobre
+    fullLetter.style.display = 'none';
+    fullLetter.style.visibility = 'hidden';
+    document.getElementById('envelope-container').classList.add('hidden');
 
-    const countdownInterval = setInterval(() => {
-        count--;
-        if (count > 0) {
-            countdownElement.textContent = count;
-        } else {
-            clearInterval(countdownInterval);
-            countdownElement.style.display = 'none';
-
-            // Cambiamos la frase
-            phraseElement.textContent = 'Te quiero mucho<33';
-
-            // Iniciamos la animación de fuegos artificiales
-            setInterval(createFireworks, 2000);
-        }
-    }, 1000);
-});
+    // Muestra el contenedor de la rosa
+    rosaContainer.classList.remove('hidden');
+    setTimeout(() => {
+        rosaContainer.style.opacity = '1';
+    }, 10);
+}

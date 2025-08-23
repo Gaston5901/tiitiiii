@@ -1,0 +1,191 @@
+:root {
+    --heart-red: #ff0000;
+    --heart-pink: #e91e63;
+    --nebula-color1: #a4508b;
+    --nebula-color2: #5f0a87;
+    --text-color: #fff;
+}
+
+body {
+    background: #000;
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* --- Fondo y efectos del espacio --- */
+.space-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.nebula-effect {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 70%, var(--nebula-color1), transparent),
+                radial-gradient(circle at 70% 30%, var(--nebula-color2), transparent);
+    background-size: 50% 50%;
+    animation: nebulaMove 30s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes nebulaMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-50%, -50%); }
+}
+
+/* Estrellas y estrellas fugaces (sin cambios) */
+#stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 5s linear infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.5); }
+}
+
+.shooting-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    border-radius: 50%;
+    animation: shoot 5s linear infinite;
+    transform: rotate(45deg) scaleX(0);
+}
+
+@keyframes shoot {
+    0% { transform: rotate(45deg) scaleX(0); opacity: 0; }
+    5% { transform: rotate(45deg) scaleX(20); opacity: 1; }
+    10% { transform: rotate(45deg) scaleX(0); opacity: 0; }
+    100% { transform: rotate(45deg) scaleX(0); opacity: 0; }
+}
+
+/* --- El corazón con más efectos --- */
+.heart-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.heart {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--heart-red);
+    opacity: 0;
+    
+    /* Animación de entrada: aparece y rota */
+    animation: heartEntrance 2s ease-out forwards;
+}
+
+/* El resplandor con más fuerza */
+.heart-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--heart-pink); /* Color diferente para un mejor efecto */
+    filter: blur(25px);
+    opacity: 0;
+    
+    animation: heartPulse 3s ease-in-out infinite,
+               fadeInGlow 1.5s ease-in forwards 1.5s;
+}
+
+/* Forma del corazón más fluida */
+.heart, .heart-pulse {
+    clip-path: polygon(50% 0%, 65% 15%, 85% 0%, 100% 20%, 100% 40%, 50% 100%, 0% 40%, 0% 20%, 15% 0%, 35% 15%);
+}
+
+/* Partículas del corazón */
+#heart-particles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+}
+
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: particleOut 2s ease-out forwards;
+}
+
+@keyframes particleOut {
+    from {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* --- Animaciones del corazón --- */
+@keyframes heartEntrance {
+    0% { opacity: 0; transform: scale(0) rotate(0deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes heartPulse {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+    50% { transform: scale(1.1) rotate(0deg); opacity: 0.3; }
+    100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+}
+
+@keyframes fadeInGlow {
+    from { opacity: 0; }
+    to { opacity: 0.8; }
+}
+
+/* --- Texto --- */
+.text-container {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+}
+
+.typed-text {
+    color: var(--text-color);
+    font-size: 1.5em;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+.typed-text::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
