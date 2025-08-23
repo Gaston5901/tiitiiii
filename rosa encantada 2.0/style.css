@@ -1,29 +1,34 @@
 /* Importa las fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 
-/* Estilos de la carta y el sobre (CÓDIGO ORIGINAL) */
+/* --- Estilos Generales y Reseteo --- */
 body {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin: 0;
     background: #0c0f1e;
     font-family: 'Dancing Script', cursive;
-    overflow: hidden;
+    overflow: hidden; /* Esto ayuda a que el contenido no se salga de la pantalla */
     transition: background-color 1s ease-in-out;
+    box-sizing: border-box;
 }
 
+/* --- Estilos de la Carta y el Sobre --- */
 .envelope-container {
-    position: relative;
     width: 300px;
     height: 200px;
+    position: relative;
     cursor: pointer;
-    transition: transform 1s ease-in-out, opacity 1s ease;
+    transition: opacity 0.5s ease, visibility 0.5s;
+    /* Centrado en dispositivos grandes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .envelope {
-    position: absolute;
     width: 100%;
     height: 100%;
     background-color: #fce4ec;
@@ -100,17 +105,18 @@ body {
     background: linear-gradient(135deg, #ffe0f7 0%, #f8bbd0 100%);
     backdrop-filter: blur(10px);
     z-index: 10;
-    padding: 50px;
-    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    box-sizing: border-box;
+    padding: 20px;
     animation: fadeInScale 1.5s ease-out forwards;
     opacity: 0;
     visibility: hidden;
     box-shadow: 0 8px 32px 0 rgba(249, 168, 212, 0.37);
     border-radius: 30px;
+    font-family: 'Dancing Script', cursive;
 }
 
 .full-screen-letter p {
@@ -118,8 +124,7 @@ body {
     font-size: 1.8em;
     line-height: 1.8;
     color: #f33f7b;
-    font-family: 'Dancing Script', cursive;
-    text-shadow: 1px 1px 2px rgba(233,30,99,0.08);
+    text-shadow: 1px 1px 2px rgba(233, 30, 99, 0.08);
 }
 
 @keyframes fadeInScale {
@@ -135,7 +140,7 @@ body {
     opacity: 0;
 }
 
-/* --- Estilos de la Rosa (CÓDIGO ORIGINAL) --- */
+/* --- Estilos de la Rosa --- */
 .rosa-container {
     position: relative;
     display: flex;
@@ -145,13 +150,13 @@ body {
     overflow: hidden;
     transform-style: preserve-3d;
     background-color: #0c0f1e;
-    transition: opacity 1s ease;
+    transition: opacity 0.5s ease, visibility 0.5s;
 }
 
 .glass {
-    position: relative;
     width: 280px;
     height: 500px;
+    position: relative;
     background: transparent;
     border: 2px solid rgba(136, 146, 179, 0.3);
     border-radius: 140px 140px 15px 15px;
@@ -298,11 +303,6 @@ body {
     100% { top: 500px; left: 45%; transform: rotateX(0deg) rotateY(0deg) rotateZ(360deg) scale(0.8); opacity: 0; }
 }
 
-/* --- Nuevos Estilos para la transición --- */
-.rosa-container {
-    background-color: #0c0f1e;
-}
-
 .go-to-envelope {
     position: absolute;
     bottom: 20px;
@@ -312,7 +312,7 @@ body {
     font-size: 1.2em;
     cursor: pointer;
     font-family: 'Dancing Script', cursive;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.2);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
     z-index: 5;
     animation: pulse-button 1.5s infinite alternate ease-in-out;
 }
@@ -324,32 +324,20 @@ body {
 
 /* Clases de utilidad para mostrar/ocultar */
 .hidden {
-    display: none !important;
     opacity: 0;
+    visibility: hidden;
 }
 
 .visible {
-    display: flex !important;
     opacity: 1;
+    visibility: visible;
 }
 
-/* Nuevas adaptaciones para móviles */
-@media (max-width: 600px) {
-    /* Mantiene los estilos de la carta para móvil */
-    .full-screen-letter p {
-        font-size: 1.15em;
-        max-width: 98vw;
-        line-height: 1.5;
-        word-break: break-word;
-    }
-    .go-to-envelope {
-        font-size: 1em;
-        bottom: 5vh;
-    }
+.envelope-container, .full-screen-letter, .rosa-container {
+    transition: opacity 0.5s ease, visibility 0.5s;
 }
-/* ... (Todo el código CSS anterior de ambos proyectos) ... */
 
-/* Nuevos estilos para el botón de regreso */
+/* Estilos para el botón de regreso */
 .return-button {
     position: absolute;
     top: 20px;
@@ -363,7 +351,7 @@ body {
     font-family: 'Dancing Script', cursive;
     cursor: pointer;
     transition: all 0.3s ease;
-    z-index: 12; /* Asegura que esté por encima de la carta */
+    z-index: 12;
 }
 
 .return-button:hover {
@@ -372,9 +360,110 @@ body {
     transform: scale(1.05);
 }
 
-/* --- Nuevas adaptaciones para móviles --- */
+/* --- Adaptaciones para dispositivos pequeños (móviles) --- */
 @media (max-width: 600px) {
-    /* ... (Estilos móviles anteriores) ... */
+    body {
+        padding: 0;
+        min-height: auto;
+    }
+    
+    .rosa-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        /* Reseteo para asegurar el centrado en móvil */
+        position: relative;
+    }
+    
+    .glass {
+        width: 80vw;
+        height: 120vw;
+        border-radius: 40vw 40vw 5px 5px;
+        /* Reajuste de posicionamiento y tamaño de la rosa */
+        position: relative;
+    }
+    
+    .glass::before {
+        width: 30vw;
+    }
+    
+    .glass-glow-base {
+        width: 60vw;
+        height: 30vw;
+    }
+    
+    .flower {
+        top: 30vw;
+        width: 40vw;
+        height: 60vw;
+    }
+    
+    .petal {
+        width: 25vw;
+        height: 30vw;
+        margin-left: calc(-25vw / 2);
+    }
+    
+    .petal.p1, .petal.p2, .petal.p3, .petal.p4, .petal.p5, .petal.p6, .petal.p7, .petal.p8 {
+        transform: none;
+    }
+    
+    .stem {
+        width: 2vw;
+        height: 40vw;
+        top: 25vw;
+    }
+    
+    .leaf.l1 {
+        top: 15vw;
+        left: -8vw;
+    }
+
+    .leaf.l2 {
+        top: 25vw;
+        right: -8vw;
+    }
+    
+    /* Ajustes para el sobre */
+    .envelope-container {
+        width: 85vw;
+        height: calc(85vw * 0.66);
+    }
+    
+    .flap {
+        border-left: calc(85vw / 2) solid transparent;
+        border-right: calc(85vw / 2) solid transparent;
+        border-top: calc(85vw * 0.33) solid #f8bbd0;
+    }
+    
+    .heart-seal {
+        top: calc(85vw * 0.45);
+    }
+    
+    /* Ajustes para la carta a pantalla completa */
+    .full-screen-letter {
+        padding: 0;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .full-screen-letter p {
+        font-size: 1.15em;
+        line-height: 1.5;
+        max-width: 90vw;
+        padding: 0 15px;
+    }
+    
+    .go-to-envelope {
+        font-size: 1em;
+        bottom: 5vh;
+    }
     
     .return-button {
         top: 10px;
@@ -382,4 +471,4 @@ body {
         padding: 8px 12px;
         font-size: 0.9em;
     }
-}   
+}
