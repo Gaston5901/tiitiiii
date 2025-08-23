@@ -5,13 +5,14 @@ function showEnvelope() {
 
     body.style.backgroundColor = '#f0e6f6';
 
-    rosaContainer.classList.add('hidden');
+    // Oculta la rosa con una transición suave
     rosaContainer.style.opacity = '0';
+    rosaContainer.style.visibility = 'hidden';
 
-    envelopeContainer.classList.remove('hidden');
-    setTimeout(() => {
-        envelopeContainer.style.opacity = '1';
-    }, 10);
+    // Muestra el sobre
+    envelopeContainer.style.visibility = 'visible';
+    envelopeContainer.style.opacity = '1';
+    envelopeContainer.classList.remove('hidden'); // Aseguramos que la clase se elimine
 }
 
 function openEnvelope() {
@@ -24,30 +25,39 @@ function openEnvelope() {
         envelopeContainer.classList.add('open');
 
         setTimeout(() => {
-            envelopeContainer.style.display = 'none';
+            // Usa visibilidad y opacidad para la transición
+            envelopeContainer.style.opacity = '0';
+            envelopeContainer.style.visibility = 'hidden';
+            
             fullLetter.style.visibility = 'visible';
-            fullLetter.style.display = 'flex';
+            fullLetter.style.opacity = '1';
+            fullLetter.style.display = 'flex'; // Asegura que la carta se muestre
         }, 1000);
     }
 }
 
-// Nueva función para volver a la rosa
 function returnToRosa() {
     const rosaContainer = document.getElementById('rosa-container');
     const fullLetter = document.getElementById('full-letter');
+    const envelopeContainer = document.getElementById('envelope-container'); // Obtener el elemento
+
     const body = document.body;
 
     // Cambia el fondo de vuelta al de la rosa
     body.style.backgroundColor = '#0c0f1e';
 
-    // Oculta la carta y el sobre
+    // Oculta la carta con transiciones suaves
     fullLetter.style.display = 'none';
     fullLetter.style.visibility = 'hidden';
-    document.getElementById('envelope-container').classList.add('hidden');
+    
+    // Vuelve a poner el sobre en su estado inicial, listo para la siguiente animación
+    envelopeContainer.classList.remove('open');
+    envelopeContainer.style.opacity = '0';
+    envelopeContainer.style.visibility = 'hidden';
+    envelopeContainer.classList.add('hidden');
 
     // Muestra el contenedor de la rosa
+    rosaContainer.style.visibility = 'visible';
+    rosaContainer.style.opacity = '1';
     rosaContainer.classList.remove('hidden');
-    setTimeout(() => {
-        rosaContainer.style.opacity = '1';
-    }, 10);
 }
