@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🌸 Sorpresa 🌸</title>
+  <title>🌙 Sorpresa Oscura 🌙</title>
   <style>
     body {
       margin: 0;
@@ -10,37 +10,40 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      background: linear-gradient(135deg, #1e003a, #000000);
       font-family: "Poppins", sans-serif;
       overflow: hidden;
+      color: #fff;
     }
 
     .card {
-      background: white;
+      background: #2c003e;
       padding: 2rem;
       border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.8);
       text-align: center;
       max-width: 350px;
       width: 100%;
       transition: 0.5s;
+      animation: aparecer 1s ease;
     }
 
     h1 {
-      color: #333;
+      color: #ffea00;
       font-size: 22px;
     }
 
     .screen {
       margin: 15px 0;
       padding: 10px;
-      border: 2px solid #ccc;
+      border: 2px solid #ffea00;
       border-radius: 10px;
       font-size: 24px;
       letter-spacing: 5px;
       text-align: center;
-      background: #f9f9f9;
+      background: #000;
       min-height: 40px;
+      color: #ffea00;
     }
 
     .keypad {
@@ -51,38 +54,83 @@
 
     .btn {
       padding: 15px;
-      background: #ff9a9e;
+      background: #440066;
       border: none;
       border-radius: 10px;
-      color: white;
+      color: #ffea00;
       font-size: 18px;
       cursor: pointer;
       transition: 0.3s;
+      box-shadow: 0 0 10px #ffea00;
     }
 
     .btn:hover {
-      background: #f78ca0;
+      background: #660099;
+      box-shadow: 0 0 20px #ffea00, 0 0 40px #ffea00;
     }
 
     .hidden {
       display: none;
     }
 
+    /* Carta animada */
+    .carta {
+      width: 420px;
+      height: 260px;
+      background: #1b002e;
+      border: 2px solid #ffea00;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(255, 234, 0, 0.6);
+      overflow: hidden;
+      animation: abrir 2s ease forwards;
+      color: #fff;
+    }
+
+    .carta::before {
+      content: "🌙💌⭐";
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 40px;
+      animation: saltito 1s infinite alternate;
+    }
+
+    @keyframes abrir {
+      from { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+      to { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    @keyframes saltito {
+      from { transform: translateX(-50%) translateY(0); }
+      to { transform: translateX(-50%) translateY(-10px); }
+    }
+
     .mensaje {
-      font-size: 22px;
-      color: #444;
-      animation: aparecer 2s ease forwards;
+      padding: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+      text-align: left;
+      white-space: pre-line;
+      border-left: 4px solid #ffea00;
+      animation: escribir 4s steps(60, end) forwards;
+      overflow: hidden;
+      width: 0;
+      color: #ffea00;
+      font-weight: bold;
+    }
+
+    @keyframes escribir {
+      from { width: 0; }
+      to { width: 100%; }
     }
 
     .corazon {
-      font-size: 60px;
-      color: red;
+      font-size: 50px;
+      text-align: center;
+      margin-top: 10px;
       animation: latido 1s infinite alternate;
-    }
-
-    @keyframes aparecer {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
     }
 
     @keyframes latido {
@@ -90,7 +138,7 @@
       to { transform: scale(1.3); }
     }
 
-    /* Flores y corazones flotando */
+    /* Animaciones flotantes */
     .flotante {
       position: absolute;
       font-size: 30px;
@@ -105,6 +153,7 @@
   </style>
 </head>
 <body>
+  <!-- Login -->
   <div class="card" id="login">
     <h1>🔢 Ingresa la clave secreta 🔢</h1>
     <div class="screen" id="screen">----</div>
@@ -124,9 +173,20 @@
     </div>
   </div>
 
-  <div class="card hidden" id="sorpresa">
-    <div class="mensaje">💛 Para vos, con mucho cariño 💛</div>
-    <div class="corazon">❤️</div>
+  <!-- Sorpresa -->
+  <div class="hidden" id="sorpresa">
+    <div class="carta">
+      <div class="mensaje" id="texto">
+        🌚 Jajaja, lo lograste...  
+        Te debo unas flores amarillas 🌼💛  
+        Pero como no se marchitan aquí,  
+        mejor te regalo 🌙 estrellas, risas 😂 y corazones.  
+
+        ✨ Sos alguien único/a,  
+        y me encanta tenerte en mi vida. 💜
+      </div>
+      <div class="corazon">💜</div>
+    </div>
   </div>
 
   <script>
@@ -155,7 +215,7 @@
 
     function verificar() {
       if (input === clave) {
-        document.getElementById("login").classList.add("hidden");
+        document.getElementById("login").style.display = "none";
         document.getElementById("sorpresa").classList.remove("hidden");
         lanzarAnimaciones();
       } else {
@@ -166,7 +226,7 @@
     }
 
     function lanzarAnimaciones() {
-      const simbolos = ["🌸","🌼","🌺","💛","❤️","💐"];
+      const simbolos = ["🌸","🌼","🌺","💛","❤️","✨","🌙","⭐"];
       setInterval(() => {
         const el = document.createElement("div");
         el.classList.add("flotante");
