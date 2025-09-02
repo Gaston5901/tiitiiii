@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🌸 Sorpresa 🌸</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 350px;
+      width: 100%;
+      transition: 0.5s;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 22px;
+    }
+
+    .screen {
+      margin: 15px 0;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      font-size: 24px;
+      letter-spacing: 5px;
+      text-align: center;
+      background: #f9f9f9;
+      min-height: 40px;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 15px;
+      background: #ff9a9e;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #f78ca0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .mensaje {
+      font-size: 22px;
+      color: #444;
+      animation: aparecer 2s ease forwards;
+    }
+
+    .corazon {
+      font-size: 60px;
+      color: red;
+      animation: latido 1s infinite alternate;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes latido {
+      from { transform: scale(1); }
+      to { transform: scale(1.3); }
+    }
+
+    /* Flores y corazones flotando */
+    .flotante {
+      position: absolute;
+      font-size: 30px;
+      animation: flotar 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes flotar {
+      from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+      to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="login">
+    <h1>🔢 Ingresa la clave secreta 🔢</h1>
+    <div class="screen" id="screen">----</div>
+    <div class="keypad">
+      <button class="btn" onclick="press(1)">1</button>
+      <button class="btn" onclick="press(2)">2</button>
+      <button class="btn" onclick="press(3)">3</button>
+      <button class="btn" onclick="press(4)">4</button>
+      <button class="btn" onclick="press(5)">5</button>
+      <button class="btn" onclick="press(6)">6</button>
+      <button class="btn" onclick="press(7)">7</button>
+      <button class="btn" onclick="press(8)">8</button>
+      <button class="btn" onclick="press(9)">9</button>
+      <button class="btn" onclick="borrar()">←</button>
+      <button class="btn" onclick="press(0)">0</button>
+      <button class="btn" onclick="verificar()">✔</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="sorpresa">
+    <div class="mensaje">💛 Para vos, con mucho cariño 💛</div>
+    <div class="corazon">❤️</div>
+  </div>
+
+  <script>
+    let input = "";
+    const clave = "1234"; // 🔐 clave secreta
+
+    function actualizarPantalla() {
+      if (input.length === 0) {
+        document.getElementById("screen").innerText = "----";
+      } else {
+        document.getElementById("screen").innerText = "•".repeat(input.length);
+      }
+    }
+
+    function press(num) {
+      if (input.length < 4) {
+        input += num;
+        actualizarPantalla();
+      }
+    }
+
+    function borrar() {
+      input = input.slice(0, -1);
+      actualizarPantalla();
+    }
+
+    function verificar() {
+      if (input === clave) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("sorpresa").classList.remove("hidden");
+        lanzarAnimaciones();
+      } else {
+        alert("Clave incorrecta 💔");
+        input = "";
+        actualizarPantalla();
+      }
+    }
+
+    function lanzarAnimaciones() {
+      const simbolos = ["🌸","🌼","🌺","💛","❤️","💐"];
+      setInterval(() => {
+        const el = document.createElement("div");
+        el.classList.add("flotante");
+        el.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.animationDuration = (3 + Math.random() * 3) + "s";
+        document.body.appendChild(el);
+
+        setTimeout(() => el.remove(), 6000);
+      }, 500);
+    }
+  </script>
+</body>
+</html>
