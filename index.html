@@ -164,33 +164,41 @@ svg { width: 100%; height: auto; max-width: 400px; }
 #avion { position:absolute; width:50px; top:50%; left:50%; transform: translate(-50%,-50%) scale(0); transition: transform 1s ease; z-index:20; }
 
 /* ==== Carta estilo sobre ==== */
-#carta .tapa {
-  width: 100%;
-  height: 100px;
-  background: #fdd835;
-  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-  transform-origin: top center;
-  transition: transform 1s ease, z-index 0s linear 1s;
+#carta {
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10;
+  top:50%; left:50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 90vw;              /* ancho relativo a pantalla */
+  max-width: 420px;
+  background: #fff9c4;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  font-family: 'Caveat', cursive;
+  padding: 0;
+  perspective: 800px;
+  z-index: 100;
 }
 
 /* Tapa del sobre con doblado */
 #carta .tapa {
   width: 0;
   height: 0;
-  border-left: 210px solid transparent;
-  border-right: 210px solid transparent;
-  border-bottom: 110px solid #fdd835;
-  transform-origin: bottom center;
-  transition: transform 1s ease, z-index 0s linear 1s;
+  border-left: 50%;          /* proporcional al ancho de la carta */
+  border-right: 50%;
+  border-bottom: 25%;        /* proporcional al ancho */
+  border-bottom-color: #fdd835;
+  border-style: solid;
   position: absolute;
   top:0; left:0;
+  transform-origin: bottom center;
+  transition: transform 1s ease, z-index 0s linear 1s;
   z-index: 10;
   backface-visibility: hidden;
 }
+
 
 /* Contenido dentro del sobre */
 #carta .contenido {
