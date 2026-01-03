@@ -1,514 +1,588 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Titii</title>
-<style>
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(to bottom, #fff9c4, #ffe082);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow-x: hidden;
-  flex-direction: column;
-  padding: 10px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños! 🎂</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cake-pink: #f7c1d9;
+            --cake-pink-dark: #e89abb;
+            --chocolate: #4b2c20;
+            --cherry: #d62828;
+            --gold: #ffd36a;
+        }
 
-.pantalla-inicio { text-align: center; padding: 0 15px; }
-.pantalla-inicio h1 {
-  font-size: clamp(2rem, 5vw, 2.6rem);
-  color: #e0a800;
-  margin-bottom: 1.2rem;
-  line-height: 1.3;
-}
-.btn {
-  padding: 16px 28px;
-  background: #ffd54f;
-  border: none;
-  border-radius: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.btn:hover { background: #ffca28; transform: scale(1.05); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.flor-container {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  border: 6px solid #fdd835;
-  border-radius: 50%;
-  padding: 50px;
-  background: rgba(255,253,231,0.9);
-  box-shadow: 0 0 30px rgba(253,216,53,0.7);
-  max-width: 95vw;
-  box-sizing: border-box;
-}
+        body {
+            background-color: #050505;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
 
-svg { width: 100%; height: auto; max-width: 400px; }
-.petalo {
-  fill: url(#gradPetalo);
-  stroke: #fbc02d;
-  stroke-width: 1.6;
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  transform-box: fill-box;
-  transform-origin: center;
-  filter: drop-shadow(0 0 7px rgba(255,193,7,0.75));
-  cursor: pointer;
-}
-.petalo.removido {
-  opacity: 0;
-  transform: scale(0.2) translateY(-15px);
-  pointer-events: none;
-}
-.petalo-g { cursor: pointer; }
+        /* FONTO DE PARTÍCULAS */
+        #bg-particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
 
-.centro {
-  fill: url(#gradCentro);
-  stroke: #f57f17;
-  stroke-width: 2.5;
-  filter: drop-shadow(0 0 10px rgba(245,127,23,0.8));
-}
-.detalles-centro { fill: #ffecb3; opacity: 0.9; }
+        /* LOADING */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
 
-.cartelito {
-  margin-top: 14px;
-  background: #fdd835;
-  padding: 12px 22px;
-  border-radius: 14px;
-  font-weight: bold;
-  color: #5d4037;
-  font-size: clamp(1.1rem, 4vw, 1.3rem);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  animation: parpadeo 2s infinite;
-  text-align: center;
-}
-@keyframes parpadeo { 0%,100%{opacity:1} 50%{opacity:0.65} }
+        .progress {
+            width: 250px;
+            height: 8px;
+            background: #222;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
 
-#boton-musica {
-  position: fixed;
-  top: 15px;
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  background: rgba(255,213,79,0.9);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-  transition: 0.25s;
-  z-index: 2000;
-}
-#boton-musica:hover { transform: scale(1.08); background: rgba(255,193,7,1); }
-.icono-svg { width: 26px; height: 26px; fill: white; }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--cake-pink), var(--gold));
+            box-shadow: 0 0 15px var(--gold);
+        }
 
-.corazon {
-  position: fixed;
-  bottom: -50px;
-  font-size: 1.8rem;
-  color: #fdd835;
-  animation: subir 6s linear infinite;
-  pointer-events: none;
-  z-index:1000;
-}
-@keyframes subir { 0% { transform: translateY(0) rotate(0deg); opacity:1 } 100% { transform: translateY(-100vh) rotate(360deg); opacity:0 } }
+        /* CONTENIDO PRINCIPAL */
+        #main {
+            position: relative;
+            z-index: 10;
+            display: none;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
 
-.modal {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.6);
-  display:none; justify-content:center; align-items:center;
-  z-index:1500;
-  padding: 15px;
-  box-sizing: border-box;
-}
-.modal-content {
-  background: #fff9c4;
-  padding: 28px 34px;
-  border-radius: 16px;
-  box-shadow:0 6px 22px rgba(0,0,0,0.45);
-  max-width: 95vw;
-  text-align: center;
-  animation: fadeIn .35s ease;
-  position: relative;
-  word-wrap: break-word;
-}
-.modal-content p { font-size: clamp(1.2rem, 4.5vw, 1.4rem); color: #6d4c41; margin: 0; }
-.close { position: absolute; top: 8px; right: 8px; font-size: 1.6rem; cursor: pointer; color: #444; }
-@keyframes fadeIn { from {opacity:0; transform:scale(.98)} to {opacity:1; transform:scale(1)} }
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 3.5rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(255, 211, 106, 0.6);
+            margin-bottom: 10px;
+        }
 
-#final-overlay {
-  position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; justify-content:center; align-items:center; z-index:3000;
-}
-#final-overlay .centrito {
-  width: 70px; height:70px; background: radial-gradient(circle,#ffea00,#ff8f00);
-  border-radius:50%; position:relative; z-index: 10;
-}
-.chispa {
-  position: absolute; width: 6px; height:6px; background:#fff176; border-radius:50%;
-  pointer-events:none; animation: explotar 1s ease-out forwards;
-  box-shadow:0 0 10px #ffeb3b,0 0 20px #ff9800;
-}
-@keyframes explotar { from{transform:translate(0,0) scale(1); opacity:1;} to{transform:translate(var(--x),var(--y)) scale(0.2);opacity:0;} }
+        .phrase {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
 
-#avion { position:absolute; width:50px; top:50%; left:50%; transform: translate(-50%,-50%) scale(0); transition: transform 1s ease; z-index:20; }
+        /* LA TORTA REALISTA */
+        .cake-container {
+            position: relative;
+            width: 300px;
+            height: 250px;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
 
-/* ==== Carta estilo sobre ==== */
-#carta {
-  position: absolute;
-  top:50%; left:50%;
-  transform: translate(-50%, -50%) scale(0);
-  width: 90vw;              /* ancho relativo a pantalla */
-  max-width: 420px;
-  background: #fff9c4;
-  border-radius: 12px;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column;
-  overflow: visible;
-  font-family: 'Caveat', cursive;
-  padding: 0;
-  perspective: 800px;
-  z-index: 100;
-}
+        /* Cuerpo de la torta */
+        .cake-body {
+            position: absolute;
+            bottom: 0;
+            width: 300px;
+            height: 150px;
+            background: repeating-linear-gradient(
+                var(--cake-pink),
+                var(--cake-pink) 20px,
+                var(--cake-pink-dark) 20px,
+                var(--cake-pink-dark) 40px
+            );
+            border-radius: 0 0 10px 10px;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.2);
+        }
 
-/* Tapa del sobre con doblado */
-#carta .tapa {
-  width: 0;
-  height: 0;
-  border-left: 50%;          /* proporcional al ancho de la carta */
-  border-right: 50%;
-  border-bottom: 25%;        /* proporcional al ancho */
-  border-bottom-color: #fdd835;
-  border-style: solid;
-  position: absolute;
-  top:0; left:0;
-  transform-origin: bottom center;
-  transition: transform 1s ease, z-index 0s linear 1s;
-  z-index: 10;
-  backface-visibility: hidden;
-}
+        /* Glaseado de Chocolate */
+        .chocolate-drip {
+            position: absolute;
+            top: 85px;
+            width: 300px;
+            height: 40px;
+            background: var(--chocolate);
+            z-index: 5;
+            border-radius: 10px 10px 0 0;
+        }
 
+        .drip {
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: var(--chocolate);
+            border-radius: 0 0 20px 20px;
+            top: 30px;
+        }
 
-/* Contenido dentro del sobre */
-#carta .contenido {
-  margin-top: 110px;
-  width: 100%;
-  padding: 25px 30px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: clamp(1rem, 2.3vw, 1.3rem);
-  color: #6d4c41;
-  opacity: 0;
-  transition: opacity 1s ease 0.5s;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  box-sizing: border-box;
-  z-index: 20;
-  overflow: visible;           /* quita scroll */
-}
+        /* Crema y Cerezas */
+        .cake-top {
+            position: absolute;
+            top: 75px;
+            width: 310px;
+            left: -5px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 6;
+        }
 
-/* Estado abierto del sobre con doblado */
-#carta.abierta .tapa {
-  transform: translateY(-120px) rotateX(-75deg);
-  z-index: 0;
-}
-#carta.abierta .contenido {
-  opacity: 1;
-  margin-top: 30px;
-}
+        .cream-puff {
+            width: 35px;
+            height: 25px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-/* ===== Estrella ===== */
-.estrella {
-  position: relative;
-  width: 0;
-  height: 0;
-  margin: 0 auto;
-  z-index: 10;
-  border-right: 60px solid transparent;
-  border-bottom: 42px solid #ffeb3b;
-  border-left: 60px solid transparent;
-  transform: rotate(35deg);
-  animation: brillar 1.5s infinite alternate;
-}
-.estrella:before {
-  border-bottom: 48px solid #ffeb3b;
-  border-left: 18px solid transparent;
-  border-right: 18px solid transparent;
-  position: absolute;
-  height: 0;
-  width: 0;
-  top: -27px;
-  left: -39px;
-  display: block;
-  content: '';
-  transform: rotate(-35deg);
-}
-.estrella:after {
-  position: absolute;
-  top: 2px;
-  left: -63px;
-  width: 0;
-  height: 0;
-  border-right: 60px solid transparent;
-  border-bottom: 42px solid #ffeb3b;
-  border-left: 60px solid transparent;
-  transform: rotate(-70deg);
-  content: '';
-}
-@keyframes brillar {
-  0% { filter: drop-shadow(0 0 5px #fff59d) drop-shadow(0 0 10px #ffc107); }
-  100% { filter: drop-shadow(0 0 20px #ffeb3b) drop-shadow(0 0 40px #ff9800); }
-}
+        .cherry {
+            width: 18px;
+            height: 18px;
+            background: var(--cherry);
+            border-radius: 50%;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: inset -3px -3px 5px rgba(0,0,0,0.3), 0 0 10px var(--cherry);
+        }
 
-/* Chispitas */
-.chispa {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #fff176;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: explotar 1s ease-out forwards;
-  box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ff9800;
-}
-@keyframes explotar {
-  from { transform: translate(0,0) scale(1); opacity:1; }
-  to { transform: translate(var(--x),var(--y)) scale(0.2); opacity:0; }
-}
+        /* Velas */
+        .candles-row {
+            position: absolute;
+            top: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 4;
+        }
 
-</style>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+        .candle {
+            width: 8px;
+            height: 60px;
+            background: linear-gradient(to bottom, #fff, #eee);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 20px;
+            background: radial-gradient(circle, #fff, #ff9d00);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 20px #ff9d00, 0 0 40px #ff9d00;
+            animation: move-flame 0.1s infinite alternate;
+        }
+
+        /* Texto sobre la torta */
+        .cake-label {
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        @keyframes move-flame {
+            from { transform: translateX(-50%) scale(1); }
+            to { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Globos al final */
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 55px;
+            border-radius: 50% 50% 50% 50% / 65% 65% 80% 80%;
+            bottom: -100px;
+            z-index: 2;
+            animation: floatUp 10s linear;
+            box-shadow: 0 4px 16px #0005;
+            background: radial-gradient(circle at 65% 30%, #fff8 0 18%, transparent 19% 100%), var(--balloon-color, #ff6f91);
+            position: absolute;
+        }
+        .balloon .balloon-shine {
+            position: absolute;
+            left: 60%;
+            top: 18%;
+            width: 12px;
+            height: 18px;
+            background: radial-gradient(circle, #fff 60%, transparent 100%);
+            border-radius: 50%;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .balloon .balloon-neck {
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 8px;
+            height: 8px;
+            background: #bdbdbd;
+            border-radius: 60% 60% 100% 100% / 100% 100% 100% 100%;
+            transform: translateX(-50%) scaleY(0.7);
+            z-index: 2;
+            box-shadow: 0 1px 2px #0002;
+        }
+        .balloon .balloon-string {
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 38px;
+            z-index: 1;
+            transform: translateX(-50%);
+        }
+        .balloon .balloon-string svg {
+            width: 2px;
+            height: 38px;
+            display: block;
+        }
+        
+        .balloon .balloon-string {
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 38px;
+            background: linear-gradient(180deg, #fff 60%, #bbb 100%);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .river-balloon {
+            background: radial-gradient(circle at 60% 40%, #fff 70%, #e3e3e3 100%) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            border-radius: 50% 50% 48% 48% / 60% 60% 100% 100%;
+            box-shadow: 0 4px 24px #0006, 0 0 0 6px #fff;
+            position: relative;
+            animation: floatUpRiver 15s linear;
+        }
+                @keyframes floatUpRiver {
+                    to { transform: translateY(-110vh); }
+                }
+        
+        .river-balloon {
+            background: radial-gradient(circle at 60% 40%, #fff 70%, #e3e3e3 100%) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            border-radius: 50% 50% 48% 48% / 60% 60% 100% 100%;
+            box-shadow: 0 4px 24px #0006, 0 0 0 6px #fff;
+            position: relative;
+        }
+        .river-balloon img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow: 0 0 18px #fff8;
+            padding: 4px;
+            z-index: 2;
+        }
+        .river-balloon::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 18px;
+            background: linear-gradient(180deg, #fff 60%, #ccc 100%);
+            border-radius: 50% 50% 60% 60% / 80% 80% 100% 100%;
+            box-shadow: 0 2px 6px #0002;
+            z-index: 1;
+        }
+        
+        .river-balloon {
+            background: transparent !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-110vh); }
+        }
+    </style>
 </head>
 <body>
 
-<div id="boton-musica" title="Play / Pause">
-  <svg id="icono-musica" class="icono-svg" viewBox="0 0 64 64">
-    <polygon points="16,12 16,52 52,32"/>
-  </svg>
-</div>
-
-<div class="pantalla-inicio" id="inicio">
-  <h1>Bienvenida a tu sorpresa Titii 🌼</h1>
-  <p>Haz click en continuar niña bellaa</p>
-  <button class="btn" onclick="mostrarFlor()">Continuar</button>
-</div>
-
-<div class="flor-container" id="flor">
-  <svg viewBox="0 0 250 400" role="img" aria-label="Flor amarilla interactiva">
-    <defs>
-      <linearGradient id="gradPetalo" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#ffee58"/>
-        <stop offset="100%" stop-color="#ffc107"/>
-      </linearGradient>
-      <radialGradient id="gradCentro" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#ffea00"/>
-        <stop offset="100%" stop-color="#ff8f00"/>
-      </radialGradient>
-      <g id="petaloShape">
-        <path d="M0 -70 C18 -48 18 0 0 34 C-18 0 -18 -48 0 -70 Z"/>
-      </g>
-    </defs>
-    <rect x="120" y="180" width="8" height="200" fill="#388e3c" rx="3"/>
-    <path d="M124 250 Q150 220, 170 250 Q150 280, 124 250 Z" fill="#4caf50" stroke="#388e3c" stroke-width="1"/>
-    <path d="M124 300 Q94 280, 74 310 Q94 340, 124 300 Z" fill="#4caf50" stroke="#388e3c" stroke-width="1"/>
-
-    <g id="petalos" transform="translate(125 125)">
-      <!-- 16 pétalos -->
-    <g class="petalo-g" transform="rotate(0)"><use href="#petaloShape" class="petalo" data-frase="Eres mi sol en los días nublados ☀️"/></g>
- <g class="petalo-g" transform="rotate(22.5)"><use href="#petaloShape" class="petalo" data-frase="Tu sonrisa ilumina mi mundo ✨"/></g>
-<g class="petalo-g" transform="rotate(45)"><use href="#petaloShape" class="petalo" data-frase="Mis locuras van con tus locuras 🤭"/></g>
-<g class="petalo-g" transform="rotate(67.5)"><use href="#petaloShape" class="petalo" data-frase="Gracias por existir 🌼"/></g>
-<g class="petalo-g" transform="rotate(90)"><use href="#petaloShape" class="petalo" data-frase="Eres un sueño hecho realidad 💫"/></g>
-<g class="petalo-g" transform="rotate(112.5)"><use href="#petaloShape" class="petalo" data-frase="Te pienso en cada 11:11 🌟"/></g>
-<g class="petalo-g" transform="rotate(135)"><use href="#petaloShape" class="petalo" data-frase="Brillas con luz propia y eso inspira 🌸"/></g>
-<g class="petalo-g" transform="rotate(157.5)"><use href="#petaloShape" class="petalo" data-frase="Mi lugar favorito es a tu lado 💖"/></g>
-<g class="petalo-g" transform="rotate(180)"><use href="#petaloShape" class="petalo" data-frase="Me haces inmensamente feliz 🥰"/></g>
-<g class="petalo-g" transform="rotate(202.5)"><use href="#petaloShape" class="petalo" data-frase="Contigo todo es mejor 🌻"/></g>
-<g class="petalo-g" transform="rotate(225)"><use href="#petaloShape" class="petalo" data-frase="Eres única e irremplazable 🌟"/></g>
-<g class="petalo-g" transform="rotate(247.5)"><use href="#petaloShape" class="petalo" data-frase="Cada día contigo es un regalo 🎁"/></g>
-<g class="petalo-g" transform="rotate(270)"><use href="#petaloShape" class="petalo" data-frase="Siempre pienso en vos 😘"/></g>
-<g class="petalo-g" transform="rotate(292.5)"><use href="#petaloShape" class="petalo" data-frase="Sos mi manca favoritaa 😄"/></g>
-<g class="petalo-g" transform="rotate(315)"><use href="#petaloShape" class="petalo" data-frase="Me vuelves cursi y feliz 🤭"/></g>
-<g class="petalo-g" transform="rotate(337.5)"><use href="#petaloShape" class="petalo" data-frase="Soy tu fan #1 💘"/></g> 
-
-    </g>
-    <circle class="centro" cx="125" cy="125" r="35"/>
-    <circle class="detalles-centro" cx="115" cy="115" r="8"/>
-    <circle class="detalles-centro" cx="135" cy="120" r="10"/>
-    <circle class="detalles-centro" cx="125" cy="140" r="7"/>
-    <circle class="detalles-centro" cx="110" cy="138" r="9"/>
-  </svg>
-  <div class="cartelito">✨ Toca cada pétalo ✨</div>
-</div>
-
-<div class="modal" id="modal">
-  <div class="modal-content"> 
-    <span class="close" onclick="cerrarModal()">&times;</span>
-    <p id="frase"></p>
-  </div>
-</div>
-
-<div id="final-overlay">
-  <!-- <div class="centrito"></div> -->
-  <div class="estrella"></div>
-  <img id="avion" src="https://i.postimg.cc/15T8k8rh/avion.png" alt="Avioncito"/>
-  <div id="carta">
-    <div class="tapa"></div>
-    <div class="contenido">
-      <p id="contenido-carta"></p>
+    <canvas id="bg-particles"></canvas>
+    <!-- Video de fondo para loading -->
+    <div id="video-loading-bg" style="position:fixed;inset:0;z-index:99;overflow:hidden;display:none;">
+        <video id="loading-video" autoplay muted loop playsinline style="width:100vw;height:100vh;object-fit:cover;">
+            <source src="fuegoartificiales.mp4" type="video/mp4">
+        </video>
+        <!-- Overlay oscuro para tapar marcas de agua -->
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);"></div>
     </div>
-  </div>
-</div>
+   
 
-<audio id="musica" loop>
-  <source src="Download.mp4" type="audio/mpeg">
-</audio>
-<audio id="sonidoPortal" src="chispasmascorto.mp4"></audio>
-<audio id="sonidoBoom" src="edsheranmg.mp4"></audio>
+    <div id="loading" style="display:none;">
+        <h2 style="color:var(--gold)">Cargando sorpresa...</h2>
+        <div class="progress">
+            <div class="progress-bar" id="bar"></div>
+        </div>
+        <div id="percent" style="margin-top:10px;font-size:1.1rem;color:var(--gold);font-family:'Poppins',sans-serif;letter-spacing:1px;">0%</div>
+    </div>
 
-<script>
-const frases = ["Eres mi sol en los días nublados ☀️","Tu sonrisa ilumina mi mundo ✨","Mis locuras van con tus locuras 🤭","Gracias por existir 🌼","Eres un sueño hecho realidad 💫","Te pienso en cada 11:11 🌟","Brillas con luz propia y eso inspira 🌸","Mi lugar favorito es a tu lado 💖","Me haces inmensamente feliz 🥰","Contigo todo es mejor titii 🌻","Eres única e irremplazable 🌟","Cada día contigo es un regalo 🎁"];
-const modal = document.getElementById("modal");
-const fraseTexto = document.getElementById("frase");
-const musica = document.getElementById("musica");
-const overlay = document.getElementById("final-overlay");
-const centrito = overlay.querySelector(".centrito");
-const avion = document.getElementById("avion");
-const carta = document.getElementById("carta");
-const contenidoCarta = carta.querySelector(".contenido");
-const sonidoPortal = document.getElementById("sonidoPortal");
-const sonidoBoom = document.getElementById("sonidoBoom");
+    <div id="main">
+        <div style="display:flex; align-items:center; justify-content:center; gap:15px;">
+            
+            <h1>🤍Feliz Cumpleañosss❤️</h1>
+            
+        </div>
+        <p class="phrase" id="main-phrase">
+            Que la vida te sorprenda con amor, luz y momentos inolvida...
+            <span id="see-more" style="color:var(--gold);cursor:pointer;text-decoration:underline;">mas aquí</span>
+        </p>
+        <!-- Modal Frase -->
+        <div id="modal-phrase" style="display:none;position:fixed;z-index:200;inset:0;background:rgba(0,0,0,0.55);justify-content:center;align-items:center;">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 8px 32px #0007;padding:32px 28px 24px 28px;max-width:90vw;width:370px;position:relative;animation:fadeIn 0.5s;">
+                <button id="close-modal" style="position:absolute;top:10px;right:14px;background:transparent;border:none;font-size:1.7rem;color:#d62828;cursor:pointer;font-weight:bold;">×</button>
+                <h2 style="font-family:'Pacifico',cursive;color:var(--gold);margin-bottom:12px;font-size:1.5rem;">Frase para Titii</h2>
+                <p style="color:#333;font-size:1.15rem;line-height:1.6;text-align:center;">
+                    Feliz cumpleaños ✨
+Te deseo un día lleno de alegría, amor y momentos lindos que te hagan sonreír.
+Que este nuevo año te acerque a todas tus metas, que se cumplan tus sueños y que la vida te sorprenda con cosas buenas.
+Y aunque hoy no hablemos como antes, te deseo de corazón lo mejor y que disfrutes mucho tu día.
+Que la pases increíble rodeada de cariño y felicidad.Feliz cumpleaños de nuevo jiji 🎉🎂🎈
+                </p>
+            </div>
+        </div>
 
-function mostrarModal(frase){ fraseTexto.textContent = frase; modal.style.display = "flex"; }
+        <div class="cake-container">
+            <div class="candles-row">
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+            </div>
 
-function cerrarModal(){
-  modal.style.display = "none";
-  if(petalosRemovidos === petalos.length){
-    musica.pause();
-    sonidoPortal.play();
-    lanzarFinal();
-  }
-}
+            <div class="cake-top">
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+            </div>
 
-const petalos = document.querySelectorAll(".petalo");
-let petalosRemovidos=0;
-petalos.forEach(p=>{
-  p.addEventListener("click", e=>{
-    e.stopPropagation();
-    if(!p.classList.contains("removido")){
-      p.classList.add("removido");
-      const frasePetalo = p.dataset.frase; // toma la frase fija del pétalo
-      mostrarModal(frasePetalo);
-      petalosRemovidos++;
-      if(petalosRemovidos===petalos.length){
-        setTimeout(()=> mostrarModal("Todas tus flores amarillas han florecido 💛💛💛, toca la x lindaa y espera <3"),600);
-      }
-    }
-  });
-});
+            <div class="chocolate-drip" id="drip-container"></div>
 
-const botonMusica=document.getElementById("boton-musica");
-const iconoMusica=document.getElementById("icono-musica");
-botonMusica.addEventListener("click",()=>{
-  if(musica.paused){ musica.play().catch(()=>{}); iconoMusica.innerHTML='<rect x="16" y="12" width="8" height="40"/><rect x="40" y="12" width="8" height="40"/>'; }
-  else{ musica.pause(); iconoMusica.innerHTML='<polygon points="16,12 16,52 52,32"/>'; }
-});
+            <div class="cake-body"></div>
+            <div class="cake-label">Titii<3</div>
+        </div>
+    </div>
 
-function mostrarFlor(){
-  document.getElementById("inicio").style.display="none";
-  document.getElementById("flor").style.display="flex";
-  musica.volume=0.5; musica.play().catch(()=>console.log("Autoplay bloqueado."));
-  lanzarCorazones();
-  iconoMusica.innerHTML='<rect x="16" y="12" width="8" height="40"/><rect x="40" y="12" width="8" height="40"/>';
-}
+    <script>
+        // Video de fondo para loading
+        const videoBg = document.getElementById('video-loading-bg');
+        const loadingScreen = document.getElementById('loading');
+        videoBg.style.display = 'block';
+        loadingScreen.style.display = 'flex';
+        // Modal frase
+        document.addEventListener('DOMContentLoaded', function() {
+            const seeMore = document.getElementById('see-more');
+            const modal = document.getElementById('modal-phrase');
+            const closeModal = document.getElementById('close-modal');
+            if(seeMore && modal && closeModal) {
+                seeMore.addEventListener('click', () => {
+                    modal.style.display = 'flex';
+                });
+                closeModal.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+                modal.addEventListener('click', (e) => {
+                    if(e.target === modal) modal.style.display = 'none';
+                });
+            }
+        });
+        // Generar gotas de chocolate aleatorias
+        const dripContainer = document.getElementById('drip-container');
+        for (let i = 0; i < 15; i++) {
+            const drip = document.createElement('div');
+            drip.className = 'drip';
+            drip.style.left = (i * 20) + 'px';
+            drip.style.height = (Math.random() * 30 + 20) + 'px';
+            dripContainer.appendChild(drip);
+        }
 
-function lanzarCorazones(){
-  setInterval(()=>{
-    const corazon=document.createElement("div");
-    corazon.classList.add("corazon");
-    corazon.textContent="💛";
-    corazon.style.left=Math.random()*100+"vw";
-    corazon.style.fontSize=(20+Math.random()*20)+"px";
-    document.body.appendChild(corazon);
-    setTimeout(()=>corazon.remove(),8000);
-  },400);
-}
+        // Partículas de fondo
+        const canvas = document.getElementById('bg-particles');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
 
-// function lanzarFinal(){
-//   overlay.style.display="flex";
-//   let escalaCentro=1, anguloGiro=0;
-//   const girarInterval=setInterval(()=>{
-//     escalaCentro+=0.02;
-//     anguloGiro+=10;
-//     centrito.style.transform=`scale(${escalaCentro}) rotate(${anguloGiro}deg)`;
-//     const chispa=document.createElement("div");
-//     chispa.className="chispa";
-//     chispa.style.setProperty('--x',(Math.random()*200-100)+'px');
-//     chispa.style.setProperty('--y',(Math.random()*200-100)+'px');
-//     centrito.appendChild(chispa);
-//     setTimeout(()=>chispa.remove(),1000);
-//   },50);
+        function initCanvas() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            particles = Array.from({length: 80}, () => ({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 2 + 1,
+                speed: Math.random() * 1 + 0.5,
+                opacity: Math.random()
+            }));
+        }
 
-//   setTimeout(()=>{
-//     clearInterval(girarInterval);
-//     sonidoBoom.play();
-//     carta.style.transform="translate(-50%, -50%) scale(0.5) rotate(-45deg)";
-//     carta.style.transition="transform 1s ease-out";
-//     void carta.offsetWidth;
-//     carta.style.transform="translate(-50%, -50%) scale(1) rotate(0deg)";
-//     contenidoCarta.textContent="Aunque todavía no nos hayamos visto en persona, ya sos mi lugar seguro y mi alegría del día. 💫 Cada palabra tuya me acerca, cada risa me desarma y cada ocurrencia me hace sonreír como un bobo. 🙈 No somos novios (todavía), pero se siente como si lo fuéramos: en tus triunfos voy a aplaudirte como tu fan número 1 💘, en tus bajones voy a bancarte con todo mi corazón 💛 y en cada paso que des te voy a recordar lo orgulloso que estoy 🥰. Sí, soy cursi, pero es que con vos me sale natural: romántico, juguetón y medio tonto 🤭. Me muero por ese abrazo pendiente, por mirarte a los ojos por primera vez y por todas las risas que nos esperan. Gracias por existir; sos mi persona favorita en este mundo (y en todos los universos paralelos). 😏✨";
-//     setTimeout(()=>{ carta.classList.add("abierta"); }, 1000);
-//     avion.style.transform="translate(-50%, -50%) scale(1) rotate(-15deg)";
-//   },5000);
-// }
-function lanzarFinal(){
-  overlay.style.display = "flex";
-  const estrella = document.querySelector(".estrella"); // 👉 ahora usamos la estrella
-  let escalaCentro = 1, anguloGiro = 0;
+        function drawParticles() {
+            ctx.clearRect(0, 0, w, h);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 211, 106, ${p.opacity})`;
+                ctx.fill();
+                p.y -= p.speed;
+                if (p.y < 0) p.y = h;
+            });
+            requestAnimationFrame(drawParticles);
+        }
 
-  const girarInterval = setInterval(() => {
-    escalaCentro += 0.02;
-    anguloGiro += 10;
-    estrella.style.transform = `scale(${escalaCentro}) rotate(${anguloGiro}deg)`;
+        // Globos flotantes
+        // URLs de globos de River (usa los adjuntos locales si los subes a un host, aquí pongo ejemplos de imágenes online)
+        const riverBalloons = [
+            'river1.png', // reemplaza por tu URL real
+            'river2.png',  // reemplaza por tu URL real
+            'river1.png', // ejemplo escudo recortado, reemplaza por la URL de la imagen adjunta
+        ];
 
-    const chispa = document.createElement("div");
-    chispa.className = "chispa";
-    chispa.style.setProperty('--x', (Math.random() * 200 - 100) + 'px');
-    chispa.style.setProperty('--y', (Math.random() * 200 - 100) + 'px');
-    estrella.appendChild(chispa);
-    setTimeout(() => chispa.remove(), 1000);
-  }, 50);
+        function createBalloon() {
+            const colors = ['#ff6f91', '#ffc75f', '#845ec2', '#4d96ff', '#f9f871'];
+            const useRiver = Math.random() < 0.33; // 1 de cada 3 será de River
+            let b;
+            if (useRiver) {
+                b = document.createElement('div');
+                b.className = 'balloon river-balloon';
+                b.style.left = Math.random() * 100 + 'vw';
+                const img = document.createElement('img');
+                img.src = riverBalloons[Math.floor(Math.random() * riverBalloons.length)];
+                img.style.width = '90%';
+                img.style.height = '90%';
+                img.style.objectFit = 'contain';
+                img.style.borderRadius = '50%';
+                img.style.background = 'transparent';
+                img.style.boxShadow = '0 0 18px #fff8';
+                img.style.padding = '4px';
+                b.appendChild(img);
+                setTimeout(() => b.remove(), 15000);
+            } else {
+                b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.left = Math.random() * 100 + 'vw';
+                // Elegir color y setear como variable CSS
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                b.style.setProperty('--balloon-color', color);
+                // Brillo
+                const shine = document.createElement('div');
+                shine.className = 'balloon-shine';
+                b.appendChild(shine);
+                // Boquilla
+                const neck = document.createElement('div');
+                neck.className = 'balloon-neck';
+                b.appendChild(neck);
+                // Hilo SVG curvo
+                const hilo = document.createElement('div');
+                hilo.className = 'balloon-string';
+                hilo.innerHTML = `<svg viewBox="0 0 2 38"><path d="M1 0 Q2 8 1 14 Q0 20 1 26 Q2 32 1 38" stroke="#bbb" stroke-width="2" fill="none"/></svg>`;
+                b.appendChild(hilo);
+                setTimeout(() => b.remove(), 10000);
+            }
+            document.body.appendChild(b);
+        }
 
-  setTimeout(() => {
-    clearInterval(girarInterval);
-    sonidoBoom.play();
+        // Simulación de Loading
 
-    carta.style.transform = "translate(-50%, -50%) scale(0.5) rotate(-45deg)";
-    carta.style.transition = "transform 1s ease-out";
-    void carta.offsetWidth; // forzar reflow
-    carta.style.transform = "translate(-50%, -50%) scale(1) rotate(0deg)";
-
-    contenidoCarta.textContent = "Aunque todavía no nos hayamos visto en persona, ya sos mi lugar seguro y mi alegría del día 💫. Cada palabra tuya me acerca y cada ocurrencia me hace sonreír como un boludoo 🙈. No somos novios (todavíaa), pero se siente como si lo fuéramos, siempre voy a estar orgulloso de voss<33, soy tufan #1 💘, en tus bajones voy a bancarte con todo mi corazón 💝. Sí, soy cursi, pero con vos me sale natural: romántico y medio tontoo ksksks 🤭. Me muero por ese abrazo pendiente, por mirarte a los ojos por primera vez y por todas las risas que nos esperan. No puedo dártelo en persona 🥺​​​, pero quiero que estas flores amarillas virtuales sean mi abrazo para vos en este día especial 🌼💛. Gracias por existir; sos mi persona favorita en este mundoo y en todos los universos paralelos. MY LOVEE 😏✨.";
-
-    setTimeout(() => { carta.classList.add("abierta"); }, 1000);
-
-    avion.style.transform = "translate(-50%, -50%) scale(1) rotate(-15deg)";
-  }, 5000);
-}
-
-</script>
+        let progress = 0;
+        const bar = document.getElementById('bar');
+        const percent = document.getElementById('percent');
+        const mainContent = document.getElementById('main');
+        function launchBalloons(n) {
+            for (let i = 0; i < n; i++) {
+                setTimeout(createBalloon, i * 350);
+            }
+        }
+        const interval = setInterval(() => {
+            progress += 2;
+            bar.style.width = progress + '%';
+            percent.textContent = progress + '%';
+            if (progress >= 100) {
+                clearInterval(interval);
+                loadingScreen.style.opacity = '0';
+                videoBg.style.display = 'none';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    initCanvas();
+                    drawParticles();
+                    // Lanzar varios globos de River apenas inicia
+                    for (let i = 0; i < 6; i++) {
+                        setTimeout(() => {
+                            // Forzar que sean de River
+                            let b = document.createElement('div');
+                            b.className = 'balloon river-balloon';
+                            b.style.left = Math.random() * 100 + 'vw';
+                            const img = document.createElement('img');
+                            img.src = riverBalloons[Math.floor(Math.random() * riverBalloons.length)];
+                            img.style.width = '90%';
+                            img.style.height = '90%';
+                            img.style.objectFit = 'contain';
+                            img.style.borderRadius = '50%';
+                            img.style.background = 'transparent';
+                            img.style.boxShadow = '0 0 18px #fff8';
+                            img.style.padding = '4px';
+                            b.appendChild(img);
+                            document.body.appendChild(b);
+                            setTimeout(() => b.remove(), 8000);
+                        }, i * 350);
+                    }
+                    setInterval(() => launchBalloons(3), 1200); // Lanzar 3 globos cada 1.2s
+                }, 500);
+            }
+        }, 80); // Más lento: antes 30ms, ahora 80ms por paso
+    </script>
 </body>
 </html>
+

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños!</title>
+    <style>
+        /* Estilos Generales */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Para que los globos no generen scroll */
+            background-color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Pantalla de Carga */
+        #loader-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease-out;
+            overflow: hidden; /* Para que los globos no se salgan del loader */
+        }
+
+        .progress-container {
+            width: 300px;
+            height: 10px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid #d4af37;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f9e29c);
+            box-shadow: 0 0 10px #d4af37;
+            transition: width 0.1s linear;
+        }
+
+        #percent-text {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        /* Globos */
+        .balloon-wrapper {
+            position: absolute;
+            bottom: -150px; /* Empiezan por debajo de la pantalla */
+            animation: moveUpBalloon 8s linear forwards; /* 'forwards' mantiene el estado final */
+            opacity: 0; /* Empiezan invisibles */
+            transition: opacity 0.5s ease-in-out;
+            z-index: 50;
+        }
+
+        .balloon-wrapper.visible {
+            opacity: 1;
+        }
+
+        .balloon {
+            width: 80px; /* Más grandes */
+            height: 100px; /* Más grandes */
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: relative;
+            transform: rotate(-5deg); /* Ligera inclinación */
+        }
+
+        .balloon::before { /* Hilo del globo */
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 0 0 50% 50%;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Imágenes de globos (puedes reemplazarlas con URL si las tienes online) */
+        .balloon.red { background-image: url('https://i.imgur.com/rX00yG1.png'); } /* Globo rojo */
+        .balloon.blue { background-image: url('https://i.imgur.com/T0jG1uD.png'); } /* Globo azul */
+        .balloon.gold { background-image: url('https://i.imgur.com/L12sK1c.png'); } /* Globo dorado */
+        .balloon.green { background-image: url('https://i.imgur.com/o0hT0h7.png'); } /* Globo verde */
+
+        @keyframes moveUpBalloon {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(10deg); opacity: 0; }
+        }
+
+        /* Contenido Principal (Torta y Frases) */
+        #main-content {
+            display: none; /* Se activa con JS */
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2s ease-in;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Para las chispas */
+            z-index: 1; /* Asegurar que esté sobre el fondo */
+        }
+
+        .cake-image {
+            width: 400px; /* Ajusta el tamaño de la torta */
+            height: auto;
+            border-radius: 10px; /* Bordes suaves si la imagen lo permite */
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.7), 0 0 60px rgba(255, 220, 100, 0.3); /* Brillo alrededor */
+            margin-bottom: 20px;
+        }
+
+        /* Efecto de Chispitas en las velas */
+        .sparkle-container {
+            position: absolute;
+            top: 50%; /* Ajusta esto para posicionar las chispas sobre las velas */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Para que no interfiera con otros elementos */
+            z-index: 2; /* Sobre la torta */
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #fff, #ffcc00, transparent);
+            border-radius: 50%;
+            animation: flicker 0.15s infinite alternate;
+            box-shadow: 0 0 10px 3px #ffcc00, 0 0 20px 5px rgba(255, 220, 100, 0.5);
+            opacity: 0; /* Empieza invisible */
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.4); opacity: 1; }
+        }
+
+        h1 {
+            color: #d4af37;
+            font-size: 3.5rem; /* Más grande */
+            text-shadow: 2px 2px 15px rgba(212, 175, 55, 0.7);
+            margin: 10px 0;
+            font-family: 'Dancing Script', cursive; /* Fuente más elegante */
+        }
+
+        .frase {
+            font-style: italic;
+            font-size: 1.8rem; /* Más grande */
+            max-width: 70%;
+            color: #eee;
+            line-height: 1.6;
+            margin-top: 20px;
+            font-family: 'Playfair Display', serif; /* Otra fuente elegante */
+        }
+
+        /* Fuentes personalizadas (si las quieres, si no, se usará la de respaldo) */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+    </style>
+</head>
+<body>
+
+    <div id="loader-screen">
+        <h2 style="color: #d4af37; font-size: 2rem;">¡Preparando una sorpresa mágica para vos!</h2>
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="percent-text">0%</div>
+        </div>
+
+    <div id="main-content">
+        <img src="https://i.imgur.com/s6n5uWf.png" alt="Hermosa Torta de Cumpleaños con Velas" class="cake-image">
+        <div class="sparkle-container" id="sparkle-layer"></div>
+        <h1>¡Feliz Cumpleaños!</h1>
+        <p class="frase">"Que este nuevo año de vida te traiga infinitas alegrías, sueños cumplidos y momentos inolvidables. ¡Brilla con toda tu luz!"</p>
+        <p class="frase" style="margin-top: 15px; font-size: 1.6rem; color: #f9e29c; font-weight: bold;">¡Celebremos la vida y todos tus deseos!</p>
+    </div>
+
+    <script>
+        const balloonColors = ['red', 'blue', 'gold', 'green']; // Clases para los diferentes globos
+        const loaderScreen = document.getElementById('loader-screen');
+        const mainContent = document.getElementById('main-content');
+        const progressBar = document.getElementById('progress-bar');
+        const percentText = document.getElementById('percent-text');
+        const sparkleLayer = document.getElementById('sparkle-layer');
+
+        // Función para crear un globo individual con hilo
+        function createBalloon() {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'balloon-wrapper';
+            wrapper.style.left = Math.random() * 90 + 5 + 'vw'; // Posición horizontal aleatoria
+            wrapper.style.animationDelay = Math.random() * 2 + 's'; // Retraso aleatorio para que no salgan todos juntos
+            wrapper.style.animationDuration = (Math.random() * 5 + 8) + 's'; // Duración de animación aleatoria
+
+            const balloon = document.createElement('div');
+            balloon.className = `balloon ${balloonColors[Math.floor(Math.random() * balloonColors.length)]}`;
+
+            wrapper.appendChild(balloon);
+            loaderScreen.appendChild(wrapper);
+
+            // Hacer el globo visible después de un pequeño retraso
+            setTimeout(() => wrapper.classList.add('visible'), 50);
+
+            // Eliminar el globo una vez que sale de la pantalla para no saturar el DOM
+            wrapper.addEventListener('animationend', () => {
+                wrapper.remove();
+            });
+        }
+
+        // Intervalo para generar globos mientras carga
+        let balloonInterval;
+        let progress = 0;
+
+        // Iniciar la carga
+        function startLoading() {
+            balloonInterval = setInterval(createBalloon, 500); // Genera un globo cada 0.5 segundos
+
+            const loadingInterval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = progress + '%';
+                percentText.innerText = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(loadingInterval);
+                    clearInterval(balloonInterval); // Detener la generación de globos
+
+                    // Esconder los globos existentes suavemente
+                    const existingBalloons = document.querySelectorAll('.balloon-wrapper');
+                    existingBalloons.forEach(b => {
+                        b.style.opacity = '0';
+                        b.style.transition = 'opacity 1s ease-out';
+                        setTimeout(() => b.remove(), 1000); // Eliminar después de la transición
+                    });
+
+                    // Transición a la torta
+                    loaderScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loaderScreen.style.display = 'none';
+                        mainContent.style.display = 'flex';
+                        setTimeout(() => {
+                            mainContent.style.opacity = '1';
+                            createSparkles(); // Crear las chispas una vez que la torta es visible
+                        }, 100);
+                    }, 1000); // Esperar a que el loader se desvanezca
+                }
+            }, 70); // Velocidad de carga (70ms * 100 = 7 segundos aprox)
+        }
+
+        // Crear chispas en posiciones estratégicas para las velas
+        function createSparkles() {
+            // Coordenadas aproximadas de las velas sobre la imagen de la torta (ajusta estas según tu imagen)
+            const candlePositions = [
+                {x: '35%', y: '45%'},
+                {x: '65%', y: '40%'},
+                {x: '45%', y: '38%'},
+                {x: '55%', y: '48%'},
+                {x: '25%', y: '50%'},
+                {x: '75%', y: '52%'},
+                {x: '50%', y: '30%'} // Vela central
+            ];
+
+            candlePositions.forEach(pos => {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = pos.x;
+                sparkle.style.top = pos.y;
+                sparkle.style.opacity = Math.random() * 0.5 + 0.5; // Opacidad inicial aleatoria
+                sparkleLayer.appendChild(sparkle);
+
+                // Iniciar la animación de chispa después de un pequeño retraso
+                setTimeout(() => sparkle.style.opacity = '1', 50);
+            });
+        }
+
+        // Iniciar todo al cargar la página
+        window.onload = startLoading;
+    </script>
+</body>
+</html>
