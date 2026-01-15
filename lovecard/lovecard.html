@@ -230,28 +230,92 @@
             width: 150px; height: auto; border-radius: 8px;
         }
         
-        @media (max-width: 768px) {
-            /* --- AJUSTE DE POSICIÓN EN MÓVILES (NUEVO) --- */
+
+        @media (max-width: 900px) {
             .main-content {
-                transform: translateY(-5vh); /* Sube todo el contenido un 5% de la altura de la pantalla */
+                transform: translateY(-2vh);
             }
-
-            h1 { font-size: 2.9rem; }
-            .envoltura-sobre { width: 280px; height: 193px; }
-            .contenido { padding-right: 5px;}
-            .contenido .saludo { font-size: 1.5rem; }
-            .contenido .cuerpo { font-size: 1.0rem; }
-            .contenido .firma { font-size: 1.5rem; text-align: center; }
-
+            h1 {
+                font-size: 2.2rem;
+                margin-bottom: 25px;
+            }
+            .envoltura-sobre {
+                width: 95vw;
+                max-width: 340px;
+                height: 210px;
+            }
+            .carta {
+                width: 98vw !important;
+                max-width: 99vw;
+                height: 95vh !important;
+                max-height: 99vh;
+                left: 50%;
+                top: 10px !important;
+                transform: translateX(-50%) scale(1.1) !important;
+                padding: 12px;
+            }
+            .contenido {
+                padding-right: 2px;
+                font-size: 1.1rem;
+            }
+            .contenido .saludo {
+                font-size: 1.3rem;
+            }
+            .contenido .cuerpo {
+                font-size: 1.05rem;
+            }
+            .contenido .firma {
+                font-size: 1.2rem;
+                text-align: center;
+            }
             .bloque-firma {
                 flex-direction: column;
                 align-items: center;
-                gap: 2opx;
+                gap: 10px;
             }
             .imagen-recuerdo {
-                order: 0;
-                width: 70%;
-                max-width: 100px;
+                width: 80vw;
+                max-width: 120px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+            }
+            .envoltura-sobre {
+                width: 99vw;
+                max-width: 99vw;
+                height: 160px;
+            }
+            .carta {
+                width: 99vw !important;
+                max-width: 99vw;
+                height: 99vh !important;
+                max-height: 99vh;
+                left: 50%;
+                top: 5px !important;
+                transform: translateX(-50%) scale(1) !important;
+                padding: 6px;
+            }
+            .contenido {
+                padding-right: 0px;
+                font-size: 0.95rem;
+            }
+            .contenido .saludo {
+                font-size: 1.05rem;
+            }
+            .contenido .cuerpo {
+                font-size: 0.9rem;
+            }
+            .contenido .firma {
+                font-size: 1rem;
+                text-align: center;
+            }
+            .imagen-recuerdo {
+                width: 90vw;
+                max-width: 80px;
             }
         }
 
@@ -365,15 +429,8 @@
                 if (accion === 'abrir') {
                     envoltura.classList.add('abierto');
                     sonido.play().catch(e => console.log("La reproducción automática fue bloqueada."));
-                    
-                    if (esMovil) {
-                        setTimeout(() => {
-                            carta.style.top = '15px';
-                            carta.style.transform = 'translateX(-50%)';
-                            carta.style.width = '95vw';
-                            carta.style.height = 'calc(100vh - 30px)';
-                        }, 1700);
-                    }
+
+                    // El tamaño responsivo ahora lo maneja CSS, no JS
 
                     carta.addEventListener('animationend', () => {
                         isAnimating = false;
@@ -382,18 +439,11 @@
                     setTimeout(crearCorazones, 800);
 
                 } else if (accion === 'cerrar') {
-                    carta.style.top = '';
-                    carta.style.transform = '';
-                    carta.style.width = '';
-                    carta.style.height = '';
-                    void carta.offsetWidth;
-                    
                     envoltura.classList.add('cerrando');
                     if(sonido) {
                       sonido.pause();
                       sonido.currentTime = 0;
                     }
-
                     carta.addEventListener('animationend', () => {
                         envoltura.classList.remove('abierto', 'cerrando');
                         isAnimating = false;

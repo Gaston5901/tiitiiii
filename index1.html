@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños! 🎂</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+                            @media (max-width: 600px) {
+                                .cake-container {
+                                    width: 92vw;
+                                    max-width: 320px;
+                                    min-width: 180px;
+                                    height: 150px;
+                                    margin: 0 auto;
+                                    left: 0;
+                                    right: 0;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: flex-end;
+                                }
+                                .cake-body {
+                                    width: 92vw;
+                                    max-width: 320px;
+                                    min-width: 180px;
+                                    height: 90px;
+                                }
+                                .chocolate-drip {
+                                    width: 92vw;
+                                    max-width: 320px;
+                                    min-width: 180px;
+                                    height: 28px;
+                                    top: 55px;
+                                }
+                                .cake-top {
+                                    width: 98vw;
+                                    max-width: 330px;
+                                    left: 0;
+                                    top: 35px;
+                                }
+                                .cream-puff {
+                                    width: 22px;
+                                    height: 15px;
+                                }
+                                .candles-row {
+                                    top: 10px;
+                                    gap: 7px;
+                                }
+                                .candle {
+                                    width: 5px;
+                                    height: 32px;
+                                }
+                                .flame {
+                                    width: 8px;
+                                    height: 12px;
+                                    top: -12px;
+                                }
+                                .cake-label {
+                                    font-size: 1.1rem;
+                                    bottom: 18px;
+                                }
+                            }
+                    /* Ajustes para responsividad móvil */
+                    @media (max-width: 600px) {
+                        body {
+                            min-width: 100vw;
+                            max-width: 100vw;
+                            overflow-x: hidden !important;
+                        }
+                        #main {
+                            max-width: 100vw;
+                            overflow-x: hidden;
+                            padding: 0 2vw;
+                        }
+                        .cake-container {
+                            width: 96vw;
+                            max-width: 320px;
+                            height: 180px;
+                        }
+                        .cake-label {
+                            font-size: 1.3rem;
+                        }
+                        .candles-row {
+                            gap: 10px;
+                        }
+                        .cake-top {
+                            width: 96vw;
+                            left: 0;
+                        }
+                        .progress {
+                            width: 90vw;
+                            min-width: 120px;
+                            max-width: 320px;
+                        }
+                        .phrase {
+                            font-size: 1rem;
+                            margin-bottom: 24px;
+                        }
+                        h1 {
+                            font-size: 2.1rem;
+                        }
+                    }
+            --cake-pink: #f7c1d9;
+            --cake-pink-dark: #e89abb;
+            --chocolate: #4b2c20;
+            --cherry: #d62828;
+            --gold: #ffd36a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #050505;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            min-height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* FONTO DE PARTÍCULAS */
+        #bg-particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        /* LOADING */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+
+        .progress {
+            width: 250px;
+            height: 8px;
+            background: #222;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--cake-pink), var(--gold));
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        #main {
+            position: relative;
+            z-index: 10;
+            display: none;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 3.5rem;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(255, 211, 106, 0.6);
+            margin-bottom: 10px;
+        }
+
+        .phrase {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        /* LA TORTA REALISTA */
+        .cake-container {
+            position: relative;
+            width: 300px;
+            height: 250px;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+
+        /* Cuerpo de la torta */
+        .cake-body {
+            position: absolute;
+            bottom: 0;
+            width: 300px;
+            height: 150px;
+            background: repeating-linear-gradient(
+                var(--cake-pink),
+                var(--cake-pink) 20px,
+                var(--cake-pink-dark) 20px,
+                var(--cake-pink-dark) 40px
+            );
+            border-radius: 0 0 10px 10px;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Glaseado de Chocolate */
+        .chocolate-drip {
+            position: absolute;
+            top: 85px;
+            width: 300px;
+            height: 40px;
+            background: var(--chocolate);
+            z-index: 5;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .drip {
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: var(--chocolate);
+            border-radius: 0 0 20px 20px;
+            top: 30px;
+        }
+
+        /* Crema y Cerezas */
+        .cake-top {
+            position: absolute;
+            top: 75px;
+            width: 310px;
+            left: -5px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 6;
+        }
+
+        .cream-puff {
+            width: 35px;
+            height: 25px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .cherry {
+            width: 18px;
+            height: 18px;
+            background: var(--cherry);
+            border-radius: 50%;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: inset -3px -3px 5px rgba(0,0,0,0.3), 0 0 10px var(--cherry);
+        }
+
+        /* Velas */
+        .candles-row {
+            position: absolute;
+            top: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 4;
+        }
+
+        .candle {
+            width: 8px;
+            height: 60px;
+            background: linear-gradient(to bottom, #fff, #eee);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .flame {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 20px;
+            background: radial-gradient(circle, #fff, #ff9d00);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 20px #ff9d00, 0 0 40px #ff9d00;
+            animation: move-flame 0.1s infinite alternate;
+        }
+
+        /* Texto sobre la torta */
+        .cake-label {
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        @keyframes move-flame {
+            from { transform: translateX(-50%) scale(1); }
+            to { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Globos al final */
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 55px;
+            border-radius: 50% 50% 50% 50% / 65% 65% 80% 80%;
+            bottom: -100px;
+            z-index: 2;
+            animation: floatUp 10s linear;
+            box-shadow: 0 4px 16px #0005;
+            background: radial-gradient(circle at 65% 30%, #fff8 0 18%, transparent 19% 100%), var(--balloon-color, #ff6f91);
+            position: absolute;
+        }
+        .balloon .balloon-shine {
+            position: absolute;
+            left: 60%;
+            top: 18%;
+            width: 12px;
+            height: 18px;
+            background: radial-gradient(circle, #fff 60%, transparent 100%);
+            border-radius: 50%;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .balloon .balloon-neck {
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 8px;
+            height: 8px;
+            background: #bdbdbd;
+            border-radius: 60% 60% 100% 100% / 100% 100% 100% 100%;
+            transform: translateX(-50%) scaleY(0.7);
+            z-index: 2;
+            box-shadow: 0 1px 2px #0002;
+        }
+        .balloon .balloon-string {
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 38px;
+            z-index: 1;
+            transform: translateX(-50%);
+        }
+        .balloon .balloon-string svg {
+            width: 2px;
+            height: 38px;
+            display: block;
+        }
+        
+        .balloon .balloon-string {
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 38px;
+            background: linear-gradient(180deg, #fff 60%, #bbb 100%);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .river-balloon {
+            background: radial-gradient(circle at 60% 40%, #fff 70%, #e3e3e3 100%) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            border-radius: 50% 50% 48% 48% / 60% 60% 100% 100%;
+            box-shadow: 0 4px 24px #0006, 0 0 0 6px #fff;
+            position: relative;
+            animation: floatUpRiver 15s linear;
+        }
+                @keyframes floatUpRiver {
+                    to { transform: translateY(-110vh); }
+                }
+        
+        .river-balloon {
+            background: radial-gradient(circle at 60% 40%, #fff 70%, #e3e3e3 100%) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            border-radius: 50% 50% 48% 48% / 60% 60% 100% 100%;
+            box-shadow: 0 4px 24px #0006, 0 0 0 6px #fff;
+            position: relative;
+        }
+        .river-balloon img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow: 0 0 18px #fff8;
+            padding: 4px;
+            z-index: 2;
+        }
+        .river-balloon::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 18px;
+            background: linear-gradient(180deg, #fff 60%, #ccc 100%);
+            border-radius: 50% 50% 60% 60% / 80% 80% 100% 100%;
+            box-shadow: 0 2px 6px #0002;
+            z-index: 1;
+        }
+        
+        .river-balloon {
+            background: transparent !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-110vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-particles"></canvas>
+    <!-- Video de fondo para loading -->
+    <div id="video-loading-bg" style="position:fixed;inset:0;z-index:99;overflow:hidden;display:none;">
+        <video id="loading-video" autoplay muted loop playsinline style="width:100vw;height:100vh;object-fit:cover;">
+            <source src="fuegoartificiales.mp4" type="video/mp4">
+        </video>
+        <!-- Overlay oscuro para tapar marcas de agua -->
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.55);"></div>
+    </div>
+   
+
+    <div id="loading" style="display:none;">
+        <h2 style="color:var(--gold)">Cargando sorpresa...</h2>
+        <div class="progress">
+            <div class="progress-bar" id="bar"></div>
+        </div>
+        <div id="percent" style="margin-top:10px;font-size:1.1rem;color:var(--gold);font-family:'Poppins',sans-serif;letter-spacing:1px;">0%</div>
+    </div>
+
+    <div id="main">
+        <div style="display:flex; align-items:center; justify-content:center; gap:15px;">
+            
+            <h1>🤍Feliz Cumpleañosss❤️</h1>
+            
+        </div>
+        <p class="phrase" id="main-phrase">
+            Que la vida te sorprenda con amor, luz y momentos inolvida...
+            <span id="see-more" style="color:var(--gold);cursor:pointer;text-decoration:underline;">mas aquí</span>
+        </p>
+        <!-- Modal Frase -->
+        <div id="modal-phrase" style="display:none;position:fixed;z-index:200;inset:0;background:rgba(0,0,0,0.55);justify-content:center;align-items:center;">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 8px 32px #0007;padding:32px 28px 24px 28px;max-width:90vw;width:370px;position:relative;animation:fadeIn 0.5s;">
+                <button id="close-modal" style="position:absolute;top:10px;right:14px;background:transparent;border:none;font-size:1.7rem;color:#d62828;cursor:pointer;font-weight:bold;">×</button>
+                <h2 style="font-family:'Pacifico',cursive;color:var(--gold);margin-bottom:12px;font-size:1.5rem;">Frase para Titii</h2>
+                <p style="color:#333;font-size:1.15rem;line-height:1.6;text-align:center;">
+                    Feliz cumpleaños ✨
+Te deseo un día lleno de alegría, amor y momentos lindos que te hagan sonreír.
+Que este nuevo año te acerque a todas tus metas, que se cumplan tus sueños y que la vida te sorprenda con cosas buenas.
+Y aunque hoy no hablemos como antes, te deseo de corazón lo mejor y que disfrutes mucho tu día.
+Que la pases increíble rodeada de cariño y felicidad.Feliz cumpleaños de nuevo jiji 🎉🎂🎈
+                </p>
+            </div>
+        </div>
+
+        <div class="cake-container">
+            <div class="candles-row">
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+            </div>
+
+            <div class="cake-top">
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+                <div class="cream-puff"><div class="cherry"></div></div>
+            </div>
+
+            <div class="chocolate-drip" id="drip-container"></div>
+
+            <div class="cake-body"></div>
+            <div class="cake-label">Titii<3</div>
+        </div>
+    </div>
+
+    <script>
+        // Video de fondo para loading
+        const videoBg = document.getElementById('video-loading-bg');
+        const loadingScreen = document.getElementById('loading');
+        videoBg.style.display = 'block';
+        loadingScreen.style.display = 'flex';
+        // Modal frase
+        document.addEventListener('DOMContentLoaded', function() {
+            const seeMore = document.getElementById('see-more');
+            const modal = document.getElementById('modal-phrase');
+            const closeModal = document.getElementById('close-modal');
+            if(seeMore && modal && closeModal) {
+                seeMore.addEventListener('click', () => {
+                    modal.style.display = 'flex';
+                });
+                closeModal.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+                modal.addEventListener('click', (e) => {
+                    if(e.target === modal) modal.style.display = 'none';
+                });
+            }
+        });
+        // Generar gotas de chocolate aleatorias
+        const dripContainer = document.getElementById('drip-container');
+        for (let i = 0; i < 15; i++) {
+            const drip = document.createElement('div');
+            drip.className = 'drip';
+            drip.style.left = (i * 20) + 'px';
+            drip.style.height = (Math.random() * 30 + 20) + 'px';
+            dripContainer.appendChild(drip);
+        }
+
+        // Partículas de fondo
+        const canvas = document.getElementById('bg-particles');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+
+        function initCanvas() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            particles = Array.from({length: 80}, () => ({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 2 + 1,
+                speed: Math.random() * 1 + 0.5,
+                opacity: Math.random()
+            }));
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, w, h);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 211, 106, ${p.opacity})`;
+                ctx.fill();
+                p.y -= p.speed;
+                if (p.y < 0) p.y = h;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+
+        // Globos flotantes
+        // URLs de globos de River (usa los adjuntos locales si los subes a un host, aquí pongo ejemplos de imágenes online)
+        const riverBalloons = [
+            'river1.png', // reemplaza por tu URL real
+            'river2.png',  // reemplaza por tu URL real
+            'river1.png', // ejemplo escudo recortado, reemplaza por la URL de la imagen adjunta
+        ];
+
+        function createBalloon() {
+            const colors = ['#ff6f91', '#ffc75f', '#845ec2', '#4d96ff', '#f9f871'];
+            const useRiver = Math.random() < 0.33; // 1 de cada 3 será de River
+            let b;
+            if (useRiver) {
+                b = document.createElement('div');
+                b.className = 'balloon river-balloon';
+                b.style.left = Math.random() * 100 + 'vw';
+                const img = document.createElement('img');
+                img.src = riverBalloons[Math.floor(Math.random() * riverBalloons.length)];
+                img.style.width = '90%';
+                img.style.height = '90%';
+                img.style.objectFit = 'contain';
+                img.style.borderRadius = '50%';
+                img.style.background = 'transparent';
+                img.style.boxShadow = '0 0 18px #fff8';
+                img.style.padding = '4px';
+                b.appendChild(img);
+                setTimeout(() => b.remove(), 15000);
+            } else {
+                b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.left = Math.random() * 100 + 'vw';
+                // Elegir color y setear como variable CSS
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                b.style.setProperty('--balloon-color', color);
+                // Brillo
+                const shine = document.createElement('div');
+                shine.className = 'balloon-shine';
+                b.appendChild(shine);
+                // Boquilla
+                const neck = document.createElement('div');
+                neck.className = 'balloon-neck';
+                b.appendChild(neck);
+                // Hilo SVG curvo
+                const hilo = document.createElement('div');
+                hilo.className = 'balloon-string';
+                hilo.innerHTML = `<svg viewBox="0 0 2 38"><path d="M1 0 Q2 8 1 14 Q0 20 1 26 Q2 32 1 38" stroke="#bbb" stroke-width="2" fill="none"/></svg>`;
+                b.appendChild(hilo);
+                setTimeout(() => b.remove(), 10000);
+            }
+            document.body.appendChild(b);
+        }
+
+        // Simulación de Loading
+
+        let progress = 0;
+        const bar = document.getElementById('bar');
+        const percent = document.getElementById('percent');
+        const mainContent = document.getElementById('main');
+        function launchBalloons(n) {
+            for (let i = 0; i < n; i++) {
+                setTimeout(createBalloon, i * 350);
+            }
+        }
+        const interval = setInterval(() => {
+            progress += 2;
+            bar.style.width = progress + '%';
+            percent.textContent = progress + '%';
+            if (progress >= 100) {
+                clearInterval(interval);
+                loadingScreen.style.opacity = '0';
+                videoBg.style.display = 'none';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    initCanvas();
+                    drawParticles();
+                    // Lanzar varios globos de River apenas inicia
+                    for (let i = 0; i < 6; i++) {
+                        setTimeout(() => {
+                            // Forzar que sean de River
+                            let b = document.createElement('div');
+                            b.className = 'balloon river-balloon';
+                            b.style.left = Math.random() * 100 + 'vw';
+                            const img = document.createElement('img');
+                            img.src = riverBalloons[Math.floor(Math.random() * riverBalloons.length)];
+                            img.style.width = '90%';
+                            img.style.height = '90%';
+                            img.style.objectFit = 'contain';
+                            img.style.borderRadius = '50%';
+                            img.style.background = 'transparent';
+                            img.style.boxShadow = '0 0 18px #fff8';
+                            img.style.padding = '4px';
+                            b.appendChild(img);
+                            document.body.appendChild(b);
+                            setTimeout(() => b.remove(), 8000);
+                        }, i * 350);
+                    }
+                    setInterval(() => launchBalloons(3), 1200); // Lanzar 3 globos cada 1.2s
+                }, 500);
+            }
+        }, 80); // Más lento: antes 30ms, ahora 80ms por paso
+    </script>
+</body>
+</html>
+
