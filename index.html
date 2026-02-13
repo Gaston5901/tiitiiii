@@ -3,199 +3,450 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>En reparación — Lo siento, está lloviendo</title>
+  <title>Mis cosos ✨</title>
+  <meta name="description" content="Índice con todos los cosos de esta carpeta." />
   <style>
     :root{
-      --bg1:#0b1020;
-      --bg2:#1e2a3a;
-      --accent:#7aa2d6;
-      --muted:#9aa6b2;
+      --bg1: #fff0f6;
+      --bg2: #fbeaff;
+      --card: rgba(255,255,255,0.85);
+      --card2: rgba(255,255,255,0.95);
+      --stroke: #f8bbd0;
+      --text: #7c3a6a;
+      --muted: #b48bbd;
+      --accent1: #f48fb1;
+      --accent2: #b39ddb;
+      --accent3: #ffe082;
+      --gold: #ffd700;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      background: radial-gradient(1200px 800px at 20% 20%, rgba(80,95,140,0.08), transparent 20%),
-                  linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:#e6eef8;
-      display:flex;align-items:center;justify-content:center;
-      overflow:hidden;
+      margin:0;
+      color:var(--text);
+      font-family: 'Quicksand', 'Nunito', 'Segoe UI', Arial, sans-serif;
+      background:
+        radial-gradient(900px 500px at 15% 10%, #ffe0ef 30%, transparent 60%),
+        radial-gradient(900px 500px at 85% 20%, #e1bee7 25%, transparent 60%),
+        radial-gradient(900px 600px at 50% 95%, #fffde7 20%, transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+      min-height: 100vh;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(18px, 3vw, 34px);
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .title{
+      line-height:1.05;
+      margin:0;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      letter-spacing:-0.02em;
+      font-family: 'Quicksand', 'Nunito', 'Segoe UI', Arial, sans-serif;
+      color: var(--accent1);
+      text-shadow: 0 2px 12px #ffe0ef80;
+    }
+
+    .subtitle{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.7vw, 1.15rem);
+      max-width: 56ch;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 18px;
+      background: linear-gradient(90deg, #ffe0ef 60%, #fffde7 100%);
+      border: 1.5px solid var(--accent1);
+      border-radius: 999px;
+      color: var(--accent1);
+      font-size: 1.05rem;
+      font-weight: 600;
+      box-shadow: 0 4px 18px #f8bbd055;
+      user-select:none;
+      white-space:nowrap;
+      letter-spacing: 0.01em;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 18px;
     }
 
     .card{
-      width:min(920px,94vw);
-      min-height:420px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border-radius:18px;
-      box-shadow: 0 12px 40px rgba(3,8,20,0.6);
+      grid-column: span 12;
+      text-decoration:none;
+      color:inherit;
       position:relative;
-      padding:2.2rem;
-      display:grid;grid-template-columns:1fr 360px;gap:1.5rem;align-items:center;
-      backdrop-filter: blur(6px);
+      overflow:hidden;
+      border-radius: 22px;
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 2px solid var(--accent1);
+      box-shadow: 0 8px 32px #f8bbd055, 0 2px 8px #fffde7cc;
+      padding: 18px 18px 16px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      backdrop-filter: blur(2px);
     }
 
-    .left{padding-right:0.5rem}
-    h1{font-size: clamp(28px, 4.5vw, 44px); margin:0 0 0.6rem; letter-spacing: -0.02em}
-    p.lead{margin:0 0 1.2rem;color:var(--muted);font-size:1rem}
-
-    .sign{
-      display:inline-flex;gap:0.6rem;align-items:center;background:rgba(255,255,255,0.02);
-      padding:0.5rem 0.8rem;border-radius:999px;border:1px solid rgba(255,255,255,0.03);
-      box-shadow: 0 6px 18px rgba(2,6,12,0.4) inset;
-      font-weight:600;color:var(--accent)
+    .card:hover{
+      transform: translateY(-4px) scale(1.025);
+      border-color: var(--gold);
+      background: linear-gradient(180deg, #fffde7 60%, #ffe0ef 100%);
+      box-shadow: 0 12px 36px #ffd70044, 0 2px 8px #fffde7cc;
     }
 
-    .sad-emoji{font-size:1.6rem; filter: drop-shadow(0 6px 16px rgba(0,0,0,0.6));}
-
-    .left .meta{margin-top:1rem;color:var(--muted);font-size:0.95rem}
-
-    /* Right column - cloud + worker */
-    .scene{position:relative;height:100%;display:flex;align-items:center;justify-content:center}
-    .panel{
-      width:320px;height:320px;border-radius:16px;display:flex;align-items:center;justify-content:center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.007));
-      border:1px solid rgba(255,255,255,0.03); position:relative; overflow:hidden;
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      background:
+        radial-gradient(220px 140px at 10% 10%, #f8bbd0 30%, transparent 65%),
+        radial-gradient(240px 150px at 90% 20%, #b39ddb 22%, transparent 70%),
+        radial-gradient(200px 160px at 30% 120%, #ffe082 18%, transparent 70%);
+      opacity:.5;
+      pointer-events:none;
     }
 
-    /* canvas fills panel */
-    canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+    .card > *{ position:relative; }
 
-    .repair-sign{position:absolute;left:50%;transform:translateX(-50%);bottom:18px;display:flex;flex-direction:column;align-items:center;gap:8px}
-    .board{background:rgba(11,15,30,0.75);padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);font-weight:700;color:var(--accent);letter-spacing:0.06em}
-
-    .swing{
-      width:64px;height:64px;border-radius:12px;background:linear-gradient(180deg,#0f1724,#142231);display:flex;align-items:center;justify-content:center;
-      transform-origin:top center;box-shadow:0 8px 30px rgba(2,6,12,0.6);
-      border:1px solid rgba(255,255,255,0.04);
-      animation: swing 3.8s ease-in-out infinite
+    .card h2{
+      margin: 0 0 8px;
+      font-size: 1.22rem;
+      letter-spacing:-0.01em;
+      color: var(--accent1);
+      font-family: 'Quicksand', 'Nunito', 'Segoe UI', Arial, sans-serif;
+      font-weight: 700;
+      text-shadow: 0 1px 8px #ffe0ef55;
     }
 
-    @keyframes swing{
-      0%{transform:translateX(-50%) rotate(-6deg)}
-      50%{transform:translateX(-50%) rotate(6deg)}
-      100%{transform:translateX(-50%) rotate(-6deg)}
+    .meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .97rem;
     }
 
-    /* small helper text */
-    .hint{margin-top:12px;color:var(--muted);font-size:0.92rem}
-
-    /* responsive */
-    @media (max-width:880px){
-      .card{grid-template-columns:1fr;padding:1.2rem}
-      .scene{margin-top:12px}
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1.5px solid var(--accent2);
+      background: #f3e5f5;
+      color: #7c3a6a;
+      font-size: .89rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
     }
 
-    /* subtle footer rain text */
-    .footer{position:absolute;left:18px;bottom:12px;color:rgba(230,238,248,0.12);font-size:12px}
+    .arrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1.5px solid var(--accent3);
+      background: #fffde7;
+      color: #fbc02d;
+      flex: 0 0 auto;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 8px #ffe08244;
+    }
 
+    footer{
+      margin-top: 22px;
+      color: #b48bbd;
+      font-size: .95rem;
+      text-align: center;
+    }
+        .badge-desbloqueo{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffe082 0%, #f48fb1 55%, #e1bee7 100%);
+      color: #7c3a6a;
+      font-weight: 800;
+      font-size: .9rem;
+      box-shadow: 0 6px 18px #f8bbd055, 0 2px 8px #fffde7cc;
+      border: 2px solid #f8bbd0;
+      text-shadow: 0 1px 6px #fffde7cc;
+    }
+
+    @media (min-width: 740px){
+      .card{ grid-column: span 6; padding: 22px; }
+    }
+    @media (min-width: 1020px){
+      .card{ grid-column: span 4; }
+    }
   </style>
+  <!-- Google Fonts: Quicksand & Nunito -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main class="card" role="main">
-    <section class="left">
-      <div class="sign"><span class="sad-emoji">🌧️</span><span>En reparación</span></div>
-      <h1>Ups... estamos arreglando esto</h1>
-      <p class="lead">Perdón por el mal rato. El sitio está en mantenimiento — hoy está lloviendo un poco y la conexión está triste. Volveremos a estar como nuevos pronto.</p>
-
-      <div class="meta"> 
-        <strong>Sugerencia:</strong> podés volver más tarde o <em>refrescar</em> la página. Si necesitás algo urgente, escribinos a <span style="color:var(--accent)">soporte@ejemplo.com</span>.
+  <div class="wrap">
+    <header>
+      <div>
+        <h1 class="title">Feliz San Valentín 💘</h1>
+        
       </div>
+      <div class="pill" title="Carpeta: sol">Titii<33</div>
+    </header>
 
-      <div class="hint">Gracias por la paciencia — mientras tanto, dejá que la lluvia haga su trabajo ☂️</div>
-    </section>
+    <div class="grid">
+        <a class="card" href="sanvalentin/index.html">
+                  <div class="badge-desbloqueo">Nuevo 💖</div>
 
-    <aside class="scene">
-      <div class="panel" aria-hidden="true">
-        <canvas id="rainCanvas"></canvas>
+                  <h2>San Valentín 1</h2>
+                  <div class="meta">
+                    <span class="tag">sanvalentin</span>
+                    <span class="arrow">→</span>
+                  </div>
+                </a>
+        <a class="card" href="tocarcorazonfrases/tocarcorazonfrase.html">
+                  <div class="badge-desbloqueo">Nuevo 💖</div>
 
-        <div class="repair-sign" style="pointer-events:none">
-          <div class="swing" title="Battling the rain">
-            <!-- simple wrench icon -->
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M14 2l2 2c.6.6.6 1.6 0 2.2l-2 2 2.8 2.8c.4.4.4 1 0 1.4l-1.4 1.4c-.4.4-1 .4-1.4 0L11.4 10 9 12.4c-.4.4-1 .4-1.4 0L6.2 11c-.4-.4-.4-1 0-1.4L9 6.8 6.6 4.4C6.2 4 6.2 3.4 6.6 3L8 1.6C8.4 1.2 9 .8 9.4 1.2L14 2z" fill="#9fb7d9" opacity="0.95"/>
-            </svg>
-          </div>
-          <div class="board">Trabajando bajo la lluvia</div>
+                  <h2>San Valentín 2</h2>
+                  <div class="meta">
+                    <span class="tag">sanvalentin</span>
+                    <span class="arrow">→</span>
+                  </div>
+                </a>
+
+
+
+        <!-- <a class="card" href="tulipanes/flor_tulipan.html">
+                  <div class="badge-desbloqueo">Nuevo 💖</div>
+
+                  <h2>Flor (Tulipanes)</h2>
+                  <div class="meta">
+                    <span class="tag">tulipanes</span>
+                    <span class="arrow">→</span>
+                  </div>
+                </a> -->
+
+                  <!-- <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2>Corazones que tira frases <span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">corazonquetirafrases</span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
+              </div>
+            </a> -->
+<!-- 
+      <a class="card" href="21%20de%20sept/index.html">
+        <h2>21 de septiembre</h2>
+        <div class="meta">
+          <span class="tag">Flores Amarillas</span>
+          <span class="arrow">→</span>
         </div>
+      </a> -->
 
-      </div>
-    </aside>
+      <!-- <a class="card" href="corazon_candado_tulipanes/index.html">
+        <h2>Tulipanes Espaciales</h2>
+        <div class="meta">
+          <span class="tag">corazon_candado_tulipanes</span>
+          <span class="arrow">→</span>
+        </div>
+      </a> -->
 
-    <div class="footer">© Sitio en reparación • lluvia ligera</div>
-  </main>
+      <!-- <a class="card" href="flor%20encantada/index.html">
+        <h2>Flor Encantada</h2>
+        <div class="meta">
+          <span class="tag">Rosa de la bella y la bestia</span>
+          <span class="arrow">→</span>
+        </div>
+      </a> -->
 
-  <script>
-    // Canvas rain animation
-    const canvas = document.getElementById('rainCanvas');
-    const ctx = canvas.getContext('2d');
-    let W, H, drops;
+      <!-- <a class="card" href="flores%2021/flores21.html">
+        <h2>Flores 21</h2>
+        <div class="meta">
+          <span class="tag">flores 21</span>
+          <span class="arrow">→</span>
+        </div>
+      </a> -->
 
-    function resize(){
-      W = canvas.width = canvas.offsetWidth * devicePixelRatio;
-      H = canvas.height = canvas.offsetHeight * devicePixelRatio;
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      initDrops();
-    }
+      <!-- <a class="card" href="floramarillaff/index.html">
+        <h2>Flores (amarillas, imagen ff)</h2>
+        <div class="meta">
+          <span class="tag">flores amarillas imagen ff</span>
+          <span class="arrow">→</span>
+        </div>
+      </a> -->
 
-    function initDrops(){
-      drops = [];
-      const count = Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 8000);
-      for(let i=0;i<count;i++){
-        drops.push({
-          x: Math.random()*canvas.offsetWidth,
-          y: Math.random()*canvas.offsetHeight,
-          len: 6 + Math.random()*18,
-          speed: 1 + Math.random()*3,
-          wind: -0.6 + Math.random()*1.2,
-          alpha: 0.2 + Math.random()*0.6
-        })
+      <!-- <a class="card" href="coroaznespaciofrase/index.html">
+        <h2>Corazon</h2>
+        <div class="meta">
+          <span class="tag">Corazon en el espacio</span>
+          <span class="arrow">→</span>
+        </div>
+      </a> -->
+          <!-- proximamenteeee sorpresaQR -->
+        <!-- <a class="card" href="sorpresaQR/index.html">
+        <h2>Sorpresa (QR)</h2>
+        <div class="meta">
+          <span class="tag">amor</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>   -->
+            <!-- <a class="card" href="corazonconmusica/index.html">
+        <h2>Corazon (el espacio)</h2>
+        <div class="meta">
+          <span class="tag">Musica</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>  -->
+    </div>
+
+    <footer>
+      
+    </footer>
+        <script>
+      // Objeto con el estado de desbloqueo de cada tarjeta (por id)
+      // Cambia a true la que quieras desbloquear
+      // Bloquear ambas cards al cargar
+var tarjetasDesbloqueo = {
+  'card-1': false,
+  'card-2': false
+};
+
+      // Función para desbloquear una tarjeta por id
+      function desbloquearTarjeta(id) {
+        var card = document.getElementById(id);
+        if (!card) return;
+        card.style.opacity = '';
+        card.style.pointerEvents = '';
+        card.style.filter = '';
+        card.querySelector('.bloqueo-msg').style.display = 'none';
+        card.querySelector('.arrow').textContent = '→';
+        card.querySelector('h2 span').textContent = '';
+        // Si quieres cambiar el href dinámicamente, puedes hacerlo aquí
+        // card.href = 'ruta/deseada.html';
       }
+
+      // Función para poner un contador en una tarjeta bloqueada
+      function ponerContadorEnCard(id, fechaDesbloqueo) {
+  var card = document.getElementById(id);
+  if (!card) return;
+  var msg = card.querySelector('.bloqueo-msg');
+  if (!msg) return;
+  // Si la tarjeta ya está desbloqueada, volver a bloquearla
+  card.style.opacity = '0.5';
+  card.style.pointerEvents = 'none';
+  card.style.filter = 'grayscale(0.7)';
+  msg.style.display = 'flex';
+  card.querySelector('.arrow').textContent = '🔒';
+  card.querySelector('h2 span').textContent = '';
+  if (typeof tarjetasDesbloqueo === 'object') {
+    tarjetasDesbloqueo[id] = false;
+  }
+  // Crear o reutilizar el div del contador
+  let contadorDiv = msg.querySelector('.contador-desbloqueo');
+  if (!contadorDiv) {
+    contadorDiv = document.createElement('div');
+    contadorDiv.className = 'contador-desbloqueo';
+    // Mejor ubicación y color llamativo
+    contadorDiv.style.cssText = `
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.13em;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, #f48fb1 60%, #ffe082 100%);
+      padding: 10px 22px;
+      border-radius: 999px;
+      box-shadow: 0 4px 18px #f8bbd055, 0 2px 8px #fffde7cc;
+      border: 2px solid #f8bbd0;
+      z-index: 2;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 8px #b48bbd88;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+    `;
+    msg.appendChild(contadorDiv);
+  }
+  function actualizarContador() {
+    var ahora = new Date();
+    var falta = fechaDesbloqueo - ahora;
+    if (falta <= 0) {
+      contadorDiv.remove(); // Eliminar el contador visual
+      card.style.opacity = '';
+      card.style.pointerEvents = '';
+      card.style.filter = '';
+      msg.style.display = 'none';
+      card.querySelector('.arrow').textContent = '→';
+      card.querySelector('h2 span').textContent = '';
+      if (typeof tarjetasDesbloqueo === 'object') {
+        tarjetasDesbloqueo[id] = true;
+      }
+      return;
     }
+    var dias = Math.floor(falta / (1000*60*60*24));
+    var horas = Math.floor((falta / (1000*60*60)) % 24);
+    var mins = Math.floor((falta / (1000*60)) % 60);
+    var segs = Math.floor((falta / 1000) % 60);
+    let partes = [];
+    if (dias > 0) partes.push(dias + 'd');
+    if (horas > 0 || dias > 0) partes.push(horas + 'h');
+    if (mins > 0 || horas > 0 || dias > 0) partes.push(mins + 'm');
+    partes.push(segs + 's');
+    contadorDiv.textContent = 'Disponible en: ' + partes.join(' ');
+    setTimeout(actualizarContador, 1000);
+  }
+  actualizarContador();
+}
 
-    function draw(){
-      ctx.clearRect(0,0,canvas.width, canvas.height);
-      // draw soft cloud glow
-      const g = ctx.createRadialGradient(W/2, H*0.18, 10, W/2, H*0.18, Math.max(W,H));
-      g.addColorStop(0,'rgba(255,255,255,0.02)');
-      g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,canvas.width, canvas.height);
+      // Llama a esta función para poner un contador en la card que quieras:
+      // ponerContadorEnCard('id-de-la-card', fechaObjetivoDate)
+      // Ejemplo para poner 2 horas desde ahora en la card con id "card-3":
+      // --- CONTADORES DE DESBLOQUEO ---
+      // Para activar un contador en una card, descomenta la línea correspondiente y pon la fecha exacta:
+      ponerContadorEnCard('card-1', new Date('2026-01-23T18:38:00'));
+      // ponerContadorEnCard('card-2', new Date('2025-01-14T04:00:00'));
+      // ↑ card-2: id de otra tarjeta
+      // ↑ '2025-01-14T04:00:00': desbloqueo el 14 de enero de 2025 a las 4:00 AM
+      // --- FIN CONTADORES ---
 
-      // draw drops
-      ctx.lineWidth = 1.2;
-      ctx.lineCap = 'round';
-      for(let d of drops){
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(154,180,212,${d.alpha})`;
-        ctx.moveTo(d.x, d.y);
-        ctx.lineTo(d.x + d.wind*6, d.y + d.len);
-        ctx.stroke();
-
-        d.x += d.wind;
-        d.y += d.speed + d.len*0.02;
-
-        if(d.y > canvas.offsetHeight + 20 || d.x < -20 || d.x > canvas.offsetWidth + 20){
-          d.x = Math.random()*canvas.offsetWidth;
-          d.y = -10 - Math.random()*40;
-          d.len = 6 + Math.random()*18;
-          d.speed = 1 + Math.random()*3;
-          d.wind = -0.6 + Math.random()*1.2;
-          d.alpha = 0.2 + Math.random()*0.6;
+      // Recorre el objeto y desbloquea las que correspondan
+      Object.keys(tarjetasDesbloqueo).forEach(function(id) {
+        if (tarjetasDesbloqueo[id]) {
+          desbloquearTarjeta(id);
+        } else {
+          // Ejemplo: desbloquear el card-1 el 22 de enero de 2027 a las 15:00
+          // ponerContadorEnCard('card-1', new Date('2026-01-23T014:00:00'));
         }
-      }
-      requestAnimationFrame(draw);
-    }
+      });
+    </script>
 
-    window.addEventListener('resize', ()=>{ resize(); });
-    resize();
-    requestAnimationFrame(draw);
-
-    // optional: allow clicking repair sign to change mood
-    document.querySelector('.board').addEventListener('click', ()=>{
-      const board = document.querySelector('.board');
-      board.textContent = 'Casi listo ☂️';
-      board.style.color = 'var(--accent)';
-      setTimeout(()=>{ board.textContent = 'Trabajando bajo la lluvia' }, 3200);
-    });
-  </script>
+  </div>
 </body>
 </html>

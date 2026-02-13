@@ -3,21 +3,479 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flor Interactiva</title>
+  <title>Ramo de tulipanes morados</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: black;
+    :root{
+      --bg: #eef0f4;
+      --bg2:#dfe2ea;
+      --shadow: rgba(0,0,0,.18);
+      --stemA: #2ea85a;
+      --stemB: #146d38;
+      --leafA: #1f8f4d;
+      --leafB: #0f6a3a;
+      --petalA:#d9c4ff;
+      --petalB:#8b5cf6;
+      --petalC:#5b21b6;
+      --petalD:#2e1065;
+      --glassA: rgba(255,255,255,.55);
+      --glassB: rgba(255,255,255,.12);
+      --water: rgba(160, 200, 230, .18);
+      --ribbonA:#a855f7;
+      --ribbonB:#6d28d9;
     }
-    canvas {
-      display: block;
+
+    *{ box-sizing: border-box; }
+
+    html, body{ height: 100%; margin: 0; }
+
+    body{
+      overflow: hidden;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 600px at 50% 35%, rgba(255,255,255,.95), transparent 60%),
+        radial-gradient(1200px 800px at 50% 55%, rgba(0,0,0,.06), transparent 65%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+    }
+
+    .stage{
+      position: relative;
+      height: 100%;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      padding: 28px 14px;
+    }
+
+    .card{
+      width: min(760px, 96vw);
+      height: min(880px, 94vh);
+      position: relative;
+      border-radius: 22px;
+      background: rgba(255,255,255,.45);
+      border: 1px solid rgba(255,255,255,.55);
+      box-shadow: 0 30px 100px rgba(0,0,0,.18);
+      overflow: hidden;
+    }
+
+    .meta{
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 20;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.75);
+      backdrop-filter: blur(10px);
+    }
+    .meta h1{
+      margin: 0;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(20, 10, 40, .72);
+    }
+    .meta p{
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: rgba(20, 10, 40, .55);
+    }
+
+    .table-shadow{
+      position: absolute;
+      left: 50%;
+      bottom: 9.5%;
+      width: min(520px, 76vw);
+      height: 70px;
+      transform: translateX(-50%);
+      background: radial-gradient(closest-side, rgba(0,0,0,.22), transparent 70%);
+      filter: blur(8px);
+      opacity: .85;
+      z-index: 1;
+    }
+
+    .bouquet{
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translateX(-50%);
+      width: min(560px, 88vw);
+      height: min(720px, 78vh);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .tulip{
+      position: absolute;
+      left: calc(var(--x) * 1%);
+      bottom: calc(var(--y) * 1px);
+      width: 150px;
+      height: 620px;
+      transform: translateX(-50%) rotate(var(--tilt, 0deg));
+      transform-origin: 50% 100%;
+      z-index: var(--z, 5);
+      filter: drop-shadow(0 18px 20px rgba(0,0,0,.16));
+      animation: sway 6.2s ease-in-out infinite;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes sway{
+      0%, 100%{ transform: translateX(-50%) rotate(calc(var(--tilt, 0deg) - 0.8deg)); }
+      50%{ transform: translateX(-50%) rotate(calc(var(--tilt, 0deg) + 0.8deg)); }
+    }
+
+    .stem{
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 10px;
+      height: var(--h, 360px);
+      transform: translateX(-50%);
+      border-radius: 12px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.35), transparent 40%),
+        linear-gradient(180deg, var(--stemA), var(--stemB));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+      opacity: var(--stemAlpha, 1);
+    }
+
+    .leaf{
+      position: absolute;
+      left: 50%;
+      bottom: calc(var(--leafY, 60px));
+      width: 96px;
+      height: 26px;
+      transform-origin: 6% 60%;
+      background:
+        radial-gradient(40px 18px at 18% 42%, rgba(255,255,255,.18), transparent 60%),
+        linear-gradient(180deg, var(--leafA), var(--leafB));
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.10),
+        inset 0 -10px 16px rgba(0,0,0,.14);
+      border-radius: 110px 110px 110px 26px;
+      clip-path: polygon(0% 55%, 8% 35%, 18% 22%, 40% 12%, 72% 18%, 100% 50%, 74% 86%, 40% 92%, 18% 82%, 8% 70%);
+      filter: saturate(1.05);
+      opacity: var(--leafAlpha, 1);
+    }
+    .leaf.l{
+      transform: translateX(-10px) rotate(var(--leafTilt, -18deg)) skewX(-12deg);
+    }
+    .leaf.r{
+      transform-origin: 94% 60%;
+      border-radius: 110px 110px 26px 110px;
+      transform: translateX(10px) rotate(var(--leafTiltR, 18deg)) skewX(12deg);
+    }
+
+    .head{
+      position: absolute;
+      left: 50%;
+      bottom: calc(var(--h, 360px) - 6px);
+      width: var(--hs, 88px);
+      height: calc(var(--hs, 88px) * .95);
+      transform: translateX(-50%) rotate(var(--headTilt, 0deg));
+      transform-origin: 50% 100%;
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.14));
+    }
+
+    .flower{
+      position: absolute;
+      inset: 0;
+    }
+
+    .petal{
+      position: absolute;
+      bottom: 0;
+      width: 56%;
+      height: 92%;
+      border-radius: 999px;
+      background:
+        radial-gradient(26px 22px at 30% 20%, rgba(255,255,255,.55), transparent 62%),
+        radial-gradient(36px 26px at 65% 32%, rgba(255,255,255,.18), transparent 68%),
+        linear-gradient(180deg, var(--petalA), var(--petalB) 52%, var(--petalC) 82%, var(--petalD));
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.18),
+        inset 0 -18px 26px rgba(0,0,0,.22);
+      clip-path: polygon(10% 100%, 0% 54%, 10% 34%, 22% 18%, 38% 6%, 50% 0%, 62% 6%, 78% 18%, 90% 34%, 100% 54%, 90% 100%);
+      background-blend-mode: screen, screen, normal;
+    }
+
+    .petal::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.065) 0 1px, transparent 1px 6px);
+      mix-blend-mode: soft-light;
+      opacity: .55;
+      clip-path: inherit;
+    }
+
+    .petal.left{ left: 6%; transform: rotate(-10deg) skewX(-6deg); }
+    .petal.right{ right: 6%; transform: rotate(10deg) skewX(6deg); }
+
+    .petal.back{
+      left: 50%;
+      width: 62%;
+      height: 86%;
+      transform: translateX(-50%) rotate(0deg);
+      opacity: .86;
+      filter: saturate(.95) brightness(.98);
+    }
+
+    .petal.inner{
+      left: 50%;
+      width: 52%;
+      height: 78%;
+      transform: translateX(-50%) translateY(-2px);
+      clip-path: polygon(14% 100%, 6% 58%, 16% 34%, 30% 16%, 48% 0%, 66% 16%, 84% 34%, 94% 58%, 86% 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.16),
+        inset 0 -14px 24px rgba(0,0,0,.28);
+      opacity: .96;
+    }
+
+    .pollen{
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      width: 20px;
+      height: 12px;
+      transform: translateX(-50%);
+      background: radial-gradient(8px 6px at 30% 55%, rgba(255, 215, 120, .75), transparent 70%),
+                  radial-gradient(8px 6px at 70% 55%, rgba(255, 215, 120, .55), transparent 70%);
+      opacity: .22;
+      filter: blur(.2px);
+    }
+
+    .vase{
+      position: absolute;
+      left: 50%;
+      bottom: 8.5%;
+      transform: translateX(-50%);
+      width: min(280px, 48vw);
+      height: min(360px, 40vh);
+      z-index: 15;
+    }
+
+    .glass{
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      border-radius: 22px 22px 34px 34px;
+      background:
+        radial-gradient(180px 110px at 50% 16%, rgba(255,255,255,.55), transparent 62%),
+        radial-gradient(240px 200px at 50% 40%, rgba(255,255,255,.22), transparent 65%),
+        linear-gradient(90deg, rgba(255,255,255,.55), rgba(255,255,255,.10) 28%, rgba(255,255,255,.18) 60%, rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.65);
+      box-shadow:
+        0 22px 46px rgba(0,0,0,.20),
+        inset 0 0 0 1px rgba(255,255,255,.25);
+      backdrop-filter: blur(6px);
+      overflow: hidden;
+    }
+
+    .glass::before{
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 18px;
+      bottom: 18px;
+      width: 18px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.08));
+      opacity: .75;
+      filter: blur(.2px);
+    }
+
+    .glass::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 56%;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0), var(--water)),
+        radial-gradient(220px 120px at 50% 0%, rgba(160,200,230,.24), transparent 70%);
+      opacity: .85;
+    }
+
+    .rim{
+      position: absolute;
+      left: 50%;
+      top: -10px;
+      transform: translateX(-50%);
+      width: 98%;
+      height: 26px;
+      border-radius: 999px;
+      background:
+        radial-gradient(90px 22px at 50% 50%, rgba(255,255,255,.55), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.12));
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: 0 10px 18px rgba(0,0,0,.12);
+      z-index: 2;
+    }
+
+    .ribbon{
+      position: absolute;
+      left: 50%;
+      bottom: 40%;
+      transform: translateX(-50%);
+      width: 76%;
+      height: 64px;
+      z-index: 3;
+      filter: drop-shadow(0 12px 14px rgba(0,0,0,.15));
+    }
+
+    .band{
+      position: absolute;
+      left: 50%;
+      top: 18px;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 26px;
+      border-radius: 999px;
+      background:
+        radial-gradient(22px 18px at 20% 40%, rgba(255,255,255,.22), transparent 70%),
+        linear-gradient(180deg, var(--ribbonA), var(--ribbonB));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+    }
+
+    .bow{
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 46px;
+      height: 46px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background:
+        radial-gradient(22px 18px at 30% 30%, rgba(255,255,255,.25), transparent 68%),
+        linear-gradient(180deg, var(--ribbonA), var(--ribbonB));
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.16),
+        inset 0 -16px 22px rgba(0,0,0,.22);
+    }
+
+    .bow::before,
+    .bow::after{
+      content: "";
+      position: absolute;
+      top: 8px;
+      width: 58px;
+      height: 38px;
+      border-radius: 999px;
+      background:
+        radial-gradient(20px 14px at 35% 35%, rgba(255,255,255,.25), transparent 70%),
+        linear-gradient(180deg, var(--ribbonA), var(--ribbonB));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+      filter: saturate(1.1);
+    }
+    .bow::before{ left: -52px; transform: rotate(-14deg); clip-path: polygon(0% 50%, 14% 20%, 42% 0%, 78% 12%, 100% 50%, 78% 88%, 42% 100%, 14% 80%); }
+    .bow::after{ right: -52px; transform: rotate(14deg); clip-path: polygon(0% 50%, 22% 12%, 58% 0%, 86% 20%, 100% 50%, 86% 80%, 58% 100%, 22% 88%); }
+
+    .tagline{
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      font-size: 12px;
+      color: rgba(20, 10, 40, .5);
+      letter-spacing: .02em;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .tulip{ animation: none; }
     }
   </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
-  <script src="script.js"></script>
+  <div class="stage" aria-label="Ramo de tulipanes morados">
+    <div class="card">
+      <div class="meta">
+        <h1>Tulipanes morados</h1>
+        <p>Ramo realista, 100% CSS</p>
+      </div>
+
+      <div class="table-shadow"></div>
+
+      <div class="bouquet" aria-hidden="true">
+        <div class="tulip" style="--x: 18; --y: 0; --h: 330px; --hs: 86px; --tilt:-10deg; --headTilt:-10deg; --z: 6; --d:-1.8s; --leafY: 72px;">
+          <div class="head"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div><div class="pollen"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-26deg; --leafAlpha:.95;"></div>
+          <div class="leaf r" style="--leafTiltR: 14deg; --leafAlpha:.92;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 30; --y: 0; --h: 370px; --hs: 92px; --tilt:-4deg; --headTilt:-2deg; --z: 9; --d:-.6s; --leafY: 86px;">
+          <div class="head"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div><div class="pollen"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-18deg;"></div>
+          <div class="leaf r" style="--leafTiltR: 22deg;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 42; --y: 0; --h: 410px; --hs: 92px; --tilt: 6deg; --headTilt: 8deg; --z: 10; --d:-2.2s; --leafY: 104px;">
+          <div class="head"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div><div class="pollen"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-14deg;"></div>
+          <div class="leaf r" style="--leafTiltR: 26deg;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 56; --y: 0; --h: 460px; --hs: 96px; --tilt: 2deg; --headTilt: 0deg; --z: 12; --d:-1.2s; --leafY: 116px;">
+          <div class="head"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div><div class="pollen"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-22deg; --leafAlpha:.9;"></div>
+          <div class="leaf r" style="--leafTiltR: 18deg; --leafAlpha:.92;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 70; --y: 0; --h: 420px; --hs: 90px; --tilt: 12deg; --headTilt: 12deg; --z: 11; --d:-.9s; --leafY: 110px;">
+          <div class="head"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div><div class="pollen"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-12deg; --leafAlpha:.9;"></div>
+          <div class="leaf r" style="--leafTiltR: 30deg; --leafAlpha:.9;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 84; --y: 0; --h: 360px; --hs: 84px; --tilt: 16deg; --headTilt: 18deg; --z: 8; --d:-2.6s; --leafY: 88px;">
+          <div class="head"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div><div class="pollen"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-10deg; --leafAlpha:.85;"></div>
+          <div class="leaf r" style="--leafTiltR: 34deg; --leafAlpha:.88;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 24; --y: -10; --h: 300px; --hs: 80px; --tilt:-18deg; --headTilt:-16deg; --z: 4; --d:-1.1s; --leafY: 70px; --stemAlpha:.82; --leafAlpha:.82;">
+          <div class="head" style="filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-24deg; --leafAlpha:.78;"></div>
+          <div class="leaf r" style="--leafTiltR: 10deg; --leafAlpha:.78;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 76; --y: -12; --h: 310px; --hs: 82px; --tilt: 20deg; --headTilt: 22deg; --z: 5; --d:-1.9s; --leafY: 78px; --stemAlpha:.84;">
+          <div class="head" style="filter: drop-shadow(0 8px 10px rgba(0,0,0,.12));"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-8deg; --leafAlpha:.82;"></div>
+          <div class="leaf r" style="--leafTiltR: 28deg; --leafAlpha:.84;"></div>
+        </div>
+
+        <div class="tulip" style="--x: 50; --y: -16; --h: 285px; --hs: 78px; --tilt: 0deg; --headTilt: 6deg; --z: 3; --d:-2.9s; --leafY: 62px; --stemAlpha:.78;">
+          <div class="head" style="opacity:.92;"><div class="flower"><div class="petal back"></div><div class="petal left"></div><div class="petal right"></div><div class="petal inner"></div></div></div>
+          <div class="stem"></div>
+          <div class="leaf l" style="--leafTilt:-16deg; --leafAlpha:.76;"></div>
+          <div class="leaf r" style="--leafTiltR: 18deg; --leafAlpha:.76;"></div>
+        </div>
+      </div>
+
+      <div class="vase" aria-hidden="true">
+        <div class="rim"></div>
+        <div class="glass"></div>
+        <div class="ribbon"><div class="band"></div><div class="bow"></div></div>
+      </div>
+
+      <div class="tagline">Hecho con CSS ✦ sin imágenes</div>
+    </div>
+  </div>
 </body>
 </html>

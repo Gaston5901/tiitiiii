@@ -1,18 +1,14 @@
+let w = window.innerWidth;
+let h = window.innerHeight;
+let R = Math.min(w, h)*0.25;
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let w, h;
-
-function resize(){
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-  initParticles();
-}
-window.addEventListener('resize', resize);
-resize();
+canvas.width = w;
+canvas.height = h;
 
 const total = 2000;
 const centerPts = 600, petalPts = total - centerPts;
-const petals = 8, R = Math.min(w, h)*0.25;
+const petals = 8;
 let particles = [];
 
 const mouse = { x:null, y:null, repulse:150 };
@@ -70,7 +66,7 @@ function initParticles(){
       const ang = base + (i/(petalPts/petals)-0.5)*0.6;
       const rr = R*(0.8 + 0.3*Math.cos(i/(petalPts/petals)*Math.PI));
       const off = -20 + Math.random()*40;
-      targets.push({x:cx+Math.cos(ang)(rr+off), y:cy+Math.sin(ang)(rr+off)});
+      targets.push({x:cx+Math.cos(ang)*(rr+off), y:cy+Math.sin(ang)*(rr+off)});
     }
   }
   // crear partículas desde posiciones random
