@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mis cosos ✨</title>
+  <title>Titii</title>
   <meta name="description" content="Índice con todos los cosos de esta carpeta." />
+
+  <!-- Preconnect para fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <style>
     :root{
       --bg1: #fff0f6;
@@ -103,6 +108,8 @@
       padding: 18px 18px 16px;
       transition: transform .18s ease, border-color .18s ease, background .18s ease;
       backdrop-filter: blur(2px);
+      content-visibility: auto;
+      contain-intrinsic-size: 220px;
     }
 
     .card:hover{
@@ -134,6 +141,23 @@
       font-family: 'Quicksand', 'Nunito', 'Segoe UI', Arial, sans-serif;
       font-weight: 700;
       text-shadow: 0 1px 8px #ffe0ef55;
+    }
+
+    .card-number{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 28px;
+      height: 28px;
+      margin-right: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f48fb1 0%, #ffe082 100%);
+      color: #7c3a6a;
+      font-size: .9rem;
+      font-weight: 800;
+      box-shadow: 0 2px 8px #f8bbd055;
+      border: 1.5px solid #f8bbd0;
+      flex: 0 0 auto;
     }
 
     .meta{
@@ -180,7 +204,8 @@
       font-size: .95rem;
       text-align: center;
     }
-        .badge-desbloqueo{
+
+    .badge-desbloqueo{
       position: absolute;
       top: 12px;
       right: 12px;
@@ -202,7 +227,49 @@
     @media (min-width: 1020px){
       .card{ grid-column: span 4; }
     }
+
+    /* Optimización móvil */
+    @media (max-width: 600px){
+      body{
+        background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      }
+      .card{
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      .card::before{ opacity: .25; }
+      .card:hover{ transform: none; }
+      .pill, .arrow{ box-shadow: none; }
+      .card.bloqueada{
+        filter: none !important;
+        opacity: 0.6 !important;
+      }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+        .badge-desbloqueo{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffe082 0%, #f48fb1 55%, #e1bee7 100%);
+      color: #7c3a6a;
+      font-weight: 800;
+      font-size: .9rem;
+      box-shadow: 0 6px 18px #f8bbd055, 0 2px 8px #fffde7cc;
+      border: 2px solid #f8bbd0;
+      text-shadow: 0 1px 6px #fffde7cc;
+    }
   </style>
+
   <!-- Google Fonts: Quicksand & Nunito -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -210,45 +277,76 @@
   <div class="wrap">
     <header>
       <div>
-        <h1 class="title">Feliz San Valentín 💘</h1>
+        <h1 class="title">Galería de recuerdos 💘</h1>
         
-      </div>
+      </div>|
       <div class="pill" title="Carpeta: sol">Titii<33</div>
     </header>
 
     <div class="grid">
-        <a class="card" href="sanvalentin/index.html">
+<!-- sasasasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
+                  <!-- Ejemplo de otra tarjeta bloqueada -->
+                               <a class="card bloqueada" id="card-4" data-num="4" href="corazonflechassecruxan/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2><span class="card-number"></span>Flechazoo <span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">Para Titii </span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(139, 121, 121, 0.8);padding:8px 18px;border-radius:999px;color:#000000;font-weight:600;font-size:1.1em;">Proximamente</span>
+              </div>
+            </a>
+
+            <a class="card" href="tulipanes/flor_tulipan.html">
                   <div class="badge-desbloqueo">Nuevo 💖</div>
 
-                  <h2>San Valentín 1</h2>
+                  <h2>Tulipanes</h2>
                   <div class="meta">
-                    <span class="tag">sanvalentin</span>
+                    <span class="tag">Para Titii</span>
                     <span class="arrow">→</span>
                   </div>
                 </a>
-        <a class="card" href="tocarcorazonfrases/tocarcorazonfrase.html">
-                  <div class="badge-desbloqueo">Nuevo 💖</div>
 
-                  <h2>San Valentín 2</h2>
-                  <div class="meta">
-                    <span class="tag">sanvalentin</span>
-                    <span class="arrow">→</span>
-                  </div>
-                </a>
+                        <a class="card bloqueada" id="card-3" data-num="2" href="tocarcorazonfrases/tocarcorazonfrase.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2><span class="card-number"></span>San valentin 2 💘<span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">Para titii </span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(139, 121, 121, 0.8);padding:8px 18px;border-radius:999px;color:#000000;font-weight:600;font-size:1.1em;">Proximamente</span>
+              </div>
+            </a>
+
+            <a class="card bloqueada" id="card-1" data-num="1" href="sanvalentin/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <div class="badge-desbloqueo">Nuevo 💖</div>
+              
+              <h2><span class="card-number"></span>San valentin 1 💘<span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">Para titii </span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(139, 121, 121, 0.8);padding:8px 18px;border-radius:999px;color:#000000;font-weight:600;font-size:1.1em;">Proximamente</span>
+              </div>
+            </a>
 
 
 
-        <!-- <a class="card" href="tulipanes/flor_tulipan.html">
-                  <div class="badge-desbloqueo">Nuevo 💖</div>
-
-                  <h2>Flor (Tulipanes)</h2>
-                  <div class="meta">
-                    <span class="tag">tulipanes</span>
-                    <span class="arrow">→</span>
-                  </div>
-                </a> -->
-
-                  <!-- <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+                        <!-- Ejemplo de otra tarjeta bloqueada -->
+            <!-- <a class="card bloqueada" id="card-2" data-num="8" href="corazonflechassecruxan/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
+              <h2><span class="card-number"></span>Corazon fuerte <span style="font-size:1.2em;"></span></h2>
+              <div class="meta">
+                <span class="tag">corazon flechas</span>
+                <span class="arrow">🔒</span>
+              </div>
+              <div class="bloqueo-msg" style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+                <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
+              </div>
+            </a> -->
+      
+         <!-- Tarjeta bloqueada: Corazones que tira frases -->
+            <!-- <a class="card bloqueada" id="card-1" href="corazonquetirafrases/index.html" style="opacity:0.5; pointer-events:none; filter: grayscale(0.7); position:relative;">
               <h2>Corazones que tira frases <span style="font-size:1.2em;"></span></h2>
               <div class="meta">
                 <span class="tag">corazonquetirafrases</span>
@@ -258,11 +356,19 @@
                 <span style="background:rgba(255,255,255,0.8);padding:8px 18px;border-radius:999px;color:#b48bbd;font-weight:600;font-size:1.1em;">Bloqueado</span>
               </div>
             </a> -->
-<!-- 
-      <a class="card" href="21%20de%20sept/index.html">
-        <h2>21 de septiembre</h2>
+                  <!-- <a class="card" data-num="7" href="corazonquetirafrases/index.html">
+                    <h2><span class="card-number"></span>Corazones que tira frases</h2>
         <div class="meta">
-          <span class="tag">Flores Amarillas</span>
+          <span class="tag">corazon espacio</span>
+          <span class="arrow">→</span>
+        </div>
+      </a> -->
+<!-- dsdsdsdsdsdsdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+
+      <!-- <a class="card" data-num="6" href="corazon_candado_tulipanes/index.html">
+        <h2><span class="card-number"></span>Corazón Secreto Espacial</h2>
+        <div class="meta">
+          <span class="tag">corazon_candado_tulipanes</span>
           <span class="arrow">→</span>
         </div>
       </a> -->
@@ -275,10 +381,11 @@
         </div>
       </a> -->
 
-      <!-- <a class="card" href="flor%20encantada/index.html">
-        <h2>Flor Encantada</h2>
+
+      <!-- <a class="card" data-num="5" href="tulipanes/flor_tulipan.html">
+        <h2><span class="card-number"></span>Flor (Tulipanes)</h2>
         <div class="meta">
-          <span class="tag">Rosa de la bella y la bestia</span>
+          <span class="tag">tulipanes</span>
           <span class="arrow">→</span>
         </div>
       </a> -->
@@ -291,48 +398,52 @@
         </div>
       </a> -->
 
-      <!-- <a class="card" href="floramarillaff/index.html">
-        <h2>Flores (amarillas, imagen ff)</h2>
+      <!-- <a class="card" data-num="4" href="flores%20amarillas%20imagen%20ff/index.html">
+        <h2><span class="card-number"></span>Flores (amarillas, imagen ff)</h2>
         <div class="meta">
           <span class="tag">flores amarillas imagen ff</span>
           <span class="arrow">→</span>
         </div>
       </a> -->
 
-      <!-- <a class="card" href="coroaznespaciofrase/index.html">
-        <h2>Corazon</h2>
+      <!-- <a class="card" data-num="3" href="flores%20moradas%20con%20frases/index.html">
+        <h2><span class="card-number"></span>Flores 21 (moradas con frases)</h2>
         <div class="meta">
-          <span class="tag">Corazon en el espacio</span>
+          <span class="tag">flores moradas con frases</span>
           <span class="arrow">→</span>
         </div>
       </a> -->
           <!-- proximamenteeee sorpresaQR -->
-        <!-- <a class="card" href="sorpresaQR/index.html">
-        <h2>Sorpresa (QR)</h2>
+      <!-- <a class="card" data-num="2" href="sorpresaQR/index.html">
+        <h2><span class="card-number"></span>Sorpresa (QR)</h2>
         <div class="meta">
           <span class="tag">amor</span>
           <span class="arrow">→</span>
         </div>
-      </a>   -->
-            <!-- <a class="card" href="corazonconmusica/index.html">
-        <h2>Corazon (el espacio)</h2>
+      </a> 
+            <a class="card" data-num="1" href="corazonconmusica/index.html">
+          <h2><span class="card-number"></span>Corazon (el espacio)</h2>
         <div class="meta">
           <span class="tag">Musica</span>
           <span class="arrow">→</span>
         </div>
       </a>  -->
+             
+
     </div>
 
     <footer>
       
     </footer>
-        <script>
+    <script>
       // Objeto con el estado de desbloqueo de cada tarjeta (por id)
       // Cambia a true la que quieras desbloquear
       // Bloquear ambas cards al cargar
 var tarjetasDesbloqueo = {
   'card-1': false,
-  'card-2': false
+  'card-2': false,
+  'card-3': false,
+  'card-4': false
 };
 
       // Función para desbloquear una tarjeta por id
@@ -408,6 +519,15 @@ var tarjetasDesbloqueo = {
       if (typeof tarjetasDesbloqueo === 'object') {
         tarjetasDesbloqueo[id] = true;
       }
+      var fechaKey = 'desbloqueoFecha:' + id;
+      var fechaActual = fechaDesbloqueo.getTime();
+      var fechaGuardada = parseInt(localStorage.getItem(fechaKey) || '0', 10);
+      if (fechaGuardada !== fechaActual) {
+        localStorage.setItem(fechaKey, String(fechaActual));
+        localStorage.removeItem('avisoDesbloqueo:' + id);
+        localStorage.removeItem('avisoDesbloqueo:ultimo');
+        marcarDesbloqueoConAviso(id);
+      }
       return;
     }
     var dias = Math.floor(falta / (1000*60*60*24));
@@ -425,13 +545,104 @@ var tarjetasDesbloqueo = {
   actualizarContador();
 }
 
+      function obtenerNombreCard(id) {
+        var card = document.getElementById(id);
+        if (!card) return 'Una sorpresa';
+        var h2 = card.querySelector('h2');
+        return h2 ? h2.textContent.replace(/\s+/g, ' ').trim() : 'Una sorpresa';
+      }
+
+      function ponerBadgeEnCard(id, texto) {
+        var card = document.getElementById(id);
+        if (!card) return;
+        var existente = card.querySelector('.badge-desbloqueo');
+        if (existente) {
+          existente.textContent = texto;
+          return;
+        }
+        var badge = document.createElement('div');
+        badge.className = 'badge-desbloqueo';
+        badge.textContent = texto;
+        card.appendChild(badge);
+      }
+
+      function quitarBadgeDeCard(id) {
+        var card = document.getElementById(id);
+        if (!card) return;
+        var existente = card.querySelector('.badge-desbloqueo');
+        if (existente) existente.remove();
+      }
+
+      function limpiarAvisosExcepto(idActual) {
+        Object.keys(tarjetasDesbloqueo).forEach(function(id) {
+          if (id === idActual) return;
+          localStorage.removeItem('avisoDesbloqueo:' + id);
+          quitarBadgeDeCard(id);
+        });
+      }
+
+      function marcarDesbloqueoConAviso(id) {
+        limpiarAvisosExcepto(id);
+        var key = 'avisoDesbloqueo:' + id;
+        var raw = localStorage.getItem(key);
+        var data = raw ? JSON.parse(raw) : null;
+        if (!data || data.mostrado !== true) {
+          var nombre = obtenerNombreCard(id);
+          ponerBadgeEnCard(id, '¡Nuevo! 💖');
+          localStorage.setItem(key, JSON.stringify({
+            mostrado: true,
+            restantes: 2,
+            nombre: nombre
+          }));
+          localStorage.setItem('avisoDesbloqueo:ultimo', id);
+        }
+      }
+
+      function manejarAvisoPendiente() {
+        var ultimoId = localStorage.getItem('avisoDesbloqueo:ultimo');
+        if (!ultimoId) {
+          Object.keys(tarjetasDesbloqueo).forEach(function(id) {
+            quitarBadgeDeCard(id);
+          });
+          return;
+        }
+
+        limpiarAvisosExcepto(ultimoId);
+
+        var key = 'avisoDesbloqueo:' + ultimoId;
+        var raw = localStorage.getItem(key);
+        if (!raw) {
+          quitarBadgeDeCard(ultimoId);
+          return;
+        }
+        var data = JSON.parse(raw);
+        if (!data || data.restantes <= 0) {
+          localStorage.removeItem(key);
+          quitarBadgeDeCard(ultimoId);
+          return;
+        }
+
+        ponerBadgeEnCard(ultimoId, 'Nuevo 💖');
+        data.restantes = data.restantes - 1;
+        if (data.restantes <= 0) {
+          localStorage.removeItem(key);
+          localStorage.removeItem('avisoDesbloqueo:ultimo');
+          quitarBadgeDeCard(ultimoId);
+        } else {
+          localStorage.setItem(key, JSON.stringify(data));
+        }
+      }
+
       // Llama a esta función para poner un contador en la card que quieras:
       // ponerContadorEnCard('id-de-la-card', fechaObjetivoDate)
       // Ejemplo para poner 2 horas desde ahora en la card con id "card-3":
       // --- CONTADORES DE DESBLOQUEO ---
       // Para activar un contador en una card, descomenta la línea correspondiente y pon la fecha exacta:
-      ponerContadorEnCard('card-1', new Date('2026-01-23T18:38:00'));
-      // ponerContadorEnCard('card-2', new Date('2025-01-14T04:00:00'));
+      // ponerContadorEnCard('card-1', new Date(Date.now() + 2*60*1000)); // ← Ejemplo: 2 minutos desde ahora para card-1
+      ponerContadorEnCard('card-1', new Date('2026-01-24T04:00:00'));
+      ponerContadorEnCard('card-2', new Date('2026-01-25T02:35:00'));
+      ponerContadorEnCard('card-3', new Date('2026-02-03T02:30:00'));
+      ponerContadorEnCard('card-4', new Date('2026-03-05T01:00:00'));
       // ↑ card-2: id de otra tarjeta
       // ↑ '2025-01-14T04:00:00': desbloqueo el 14 de enero de 2025 a las 4:00 AM
       // --- FIN CONTADORES ---
@@ -442,11 +653,21 @@ var tarjetasDesbloqueo = {
           desbloquearTarjeta(id);
         } else {
           // Ejemplo: desbloquear el card-1 el 22 de enero de 2027 a las 15:00
-          // ponerContadorEnCard('card-1', new Date('2026-01-23T014:00:00'));
+          // ponerContadorEnCard('card-1', new Date('2026-01-22T014:00:00'));
+        }
+      });
+
+      manejarAvisoPendiente();
+
+      // --- NUMERACIÓN DE CARDS (editable con data-num) ---
+      document.querySelectorAll('.card').forEach(function(card) {
+        var numero = card.getAttribute('data-num');
+        var badge = card.querySelector('.card-number');
+        if (badge) {
+          badge.textContent = numero ? numero : '';
         }
       });
     </script>
-
   </div>
 </body>
 </html>
